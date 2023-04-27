@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/parks-usa/static/css/main.123dad15.css",
+    "main.js": "/parks-usa/static/js/main.52efbfb6.js",
+    "static/js/787.f85e4cef.chunk.js": "/parks-usa/static/js/787.f85e4cef.chunk.js",
+    "static/media/ParksUSA.png": "/parks-usa/static/media/ParksUSA.03f3e1a40e231147db71.png",
+    "index.html": "/parks-usa/index.html",
+    "main.123dad15.css.map": "/parks-usa/static/css/main.123dad15.css.map",
+    "main.52efbfb6.js.map": "/parks-usa/static/js/main.52efbfb6.js.map",
+    "787.f85e4cef.chunk.js.map": "/parks-usa/static/js/787.f85e4cef.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.123dad15.css",
+    "static/js/main.52efbfb6.js"
+  ]
+}
