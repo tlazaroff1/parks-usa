@@ -8,3 +8,15 @@
   height: 70%;
   width: 70%;
 }
+
+.background {
+  background-image: "./map2.jpg";
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.info {
+  width: 90% !important;
+  height: 60% !important;
+  margin: auto auto auto auto !important;
+}

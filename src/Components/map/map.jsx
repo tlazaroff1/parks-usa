@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
+import { Box } from "@mui/material";
+import "./../../App.css";
 
 const markers = [
   {
@@ -45,24 +47,28 @@ export function Map() {
   };
 
   return isLoaded ? (
-    <GoogleMap
-      onLoad={handleOnLoad}
-      onClick={() => setActiveMarker(null)}
-      mapContainerStyle={{ width: "600px", height: "500px" }}
-    >
-      {markers.map(({ id, name, position }) => (
-        <MarkerF
-          key={id}
-          position={position}
-          onClick={() => handleActiveMarker(id)}
+    <Box className="background" backgroundImage="./../../map2.jpg">
+      <Box className="info">
+        <GoogleMap
+          onLoad={handleOnLoad}
+          onClick={() => setActiveMarker(null)}
+          mapContainerStyle={{ width: "600px", height: "500px" }}
         >
-          {activeMarker === id ? (
-            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-              <div>{name}</div>
-            </InfoWindow>
-          ) : null}
-        </MarkerF>
-      ))}
-    </GoogleMap>
+          {markers.map(({ id, name, position }) => (
+            <MarkerF
+              key={id}
+              position={position}
+              onClick={() => handleActiveMarker(id)}
+            >
+              {activeMarker === id ? (
+                <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                  <div>{name}</div>
+                </InfoWindow>
+              ) : null}
+            </MarkerF>
+          ))}
+        </GoogleMap>
+      </Box>
+    </Box>
   ) : null;
 }

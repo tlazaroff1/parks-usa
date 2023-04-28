@@ -1,0 +1,21 @@
+.parksList {
+  margin: auto auto auto auto !important;
+  border: 2px solid #1c3c23;
+  border-radius: 10pt;
+  /*max-height: 900px;
+  overflow: auto;*/
+}
+
+.parkDesc {
+  align-self: flex-start !important;
+}
+
+.searchBar {
+  margin: auto auto auto auto;
+  width: 50% !important;
+  border: 1.5px solid #1c3c23 !important;
+  border-radius: 3pt;
+}
+.searchTextField {
+  border: 1.5px solid #1c3c23 !important;
+}
