@@ -6,6 +6,7 @@
 
 .App-header {
   background-color: white !important;
+  opacity: 0 !important;
   min-height: 100vh !important;
   display: flex;
   flex-direction: column;
@@ -14,9 +15,13 @@
   font-size: calc(10px + 2vmin);
   color: 060F37;
 }
+.headerAppbar {
+  background-color: rgb(225, 225, 225) !important;
+  /*position: absolute !important;*/
+}
 
 .header1 {
-  background-color: white !important;
+  background-color: transparent !important;
   color: #6b460c !important;
 }
 .buttons {

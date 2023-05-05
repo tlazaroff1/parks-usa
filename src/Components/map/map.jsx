@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
-import { Box } from "@mui/material";
+import { Box, Drawer, Typography, Toolbar, Divider } from "@mui/material";
 import "./../../App.css";
-
+import "./map.css";
+import { useContext } from "react";
+import { LocationContext } from "../state/locations/location-context";
+import { List, ListItem, ListItemText } from "@mui/material";
 const markers = [
   {
     id: 1,
@@ -46,28 +49,61 @@ export function Map() {
     map.fitBounds(bounds);
   };
 
+  const { locationState, locationDispatch } = useContext(LocationContext);
+
   return isLoaded ? (
     <Box className="background" backgroundImage="./../../map2.jpg">
-      <Box className="info">
-        <GoogleMap
-          onLoad={handleOnLoad}
-          onClick={() => setActiveMarker(null)}
-          mapContainerStyle={{ width: "600px", height: "500px" }}
-        >
-          {markers.map(({ id, name, position }) => (
-            <MarkerF
-              key={id}
-              position={position}
-              onClick={() => handleActiveMarker(id)}
-            >
-              {activeMarker === id ? (
-                <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                  <div>{name}</div>
-                </InfoWindow>
-              ) : null}
-            </MarkerF>
-          ))}
-        </GoogleMap>
+      <Box className="info" display="flex">
+        <Box width="30%" height="500px">
+          <Drawer
+            sx={{
+              width: "100%",
+              flexShrink: 1,
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                position: "relative",
+              },
+            }}
+            variant="permanent"
+            anchor="left"
+            position="relative"
+          >
+            <Toolbar>
+              <Typography variant="h6" align="center" marginLeft="6px">
+                Selected Parks:
+              </Typography>
+            </Toolbar>
+            <Divider className="divider"></Divider>
+            <List>
+              {/* {locationState.locations.map((location, index) => (
+            <ListItem key={index}>
+              <ListItemText primary={location.name} />
+            </ListItem>
+         ))}*/}
+            </List>
+          </Drawer>
+        </Box>
+        <Box width="70%">
+          <GoogleMap
+            onLoad={handleOnLoad}
+            onClick={() => setActiveMarker(null)}
+            mapContainerStyle={{ width: "100%", height: "500px" }}
+          >
+            {markers.map(({ id, name, position }) => (
+              <MarkerF
+                key={id}
+                position={position}
+                onClick={() => handleActiveMarker(id)}
+              >
+                {activeMarker === id ? (
+                  <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                    <div>{name}</div>
+                  </InfoWindow>
+                ) : null}
+              </MarkerF>
+            ))}
+          </GoogleMap>
+        </Box>
       </Box>
     </Box>
   ) : null;

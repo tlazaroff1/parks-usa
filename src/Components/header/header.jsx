@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import "./header.css";
+import logo2 from "./../../logo2.png";
 import logo from "./../../ParksUSA.png";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +33,11 @@ export function Header() {
   };
 
   return (
-    <AppBar position="static" backgroundColor="white">
+    <AppBar
+      className="headerAppbar"
+      position="relative"
+      backgroundColor="transparent"
+    >
       <Container maxWidth="xl" className="header1">
         <Toolbar disableGutters className="header">
           <Typography
@@ -41,7 +46,7 @@ export function Header() {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <img src={logo} alt="parksUSALogo" width={100} />
+            <img src={logo2} alt="parksUSALogo" width={100} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -95,7 +100,7 @@ export function Header() {
               flexGrow: 1,
             }}
           >
-            <img src={logo} alt="recipeCornerLogo" width={200} />
+            <img src={logo2} alt="recipeCornerLogo" width={200} />
           </Typography>
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

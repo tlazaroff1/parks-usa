@@ -3,23 +3,37 @@ import { Box } from "@mui/material";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import "./../../App.css";
 import "./parks.css";
+import { styled } from "@mui/material/styles";
+import Carousel from "react-material-ui-carousel";
 import { Divider } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Avatar,
-  ListItemAvatar,
-} from "@mui/material";
-
+import { useContext } from "react";
+import { LocationActions } from "../state/locations/location-reducer";
+import { LocationContext } from "../state/locations/location-context";
+import { Button, List, ListItem, ListItemText } from "@mui/material";
 import { Autocomplete, TextField, IconButton } from "@mui/material";
+import bryceCanyon from "./../../bryce-canyon1.jpg";
+import glacier from "./../../glacier.jpg";
+import grandCanyon from "./../../grandcanyon.jpg";
+import saguaro from "./../../saguaro.jpg";
+import forest from "./../../forest.jpg";
 
-export function Parks() {
+export const Parks = (props) => {
+  const images = [bryceCanyon, saguaro, glacier, grandCanyon];
+  const ImageCarouselRoot = styled("div")(({ theme }) => ({
+    width: "100%",
+    height: "400px",
+    margin: "auto",
+    "& img": {
+      width: "100%",
+      height: "350px",
+      display: "block",
+      objectFit: "cover",
+    },
+  }));
+
   const us_states = [
     { code: "AL", label: "Alabama" },
     { code: "AK", label: "Alaska" },
@@ -93,82 +107,113 @@ export function Parks() {
       .catch((error) => console.error(error));
   };
   const navigate = useNavigate();
+  const [parkId, setParkId] = useState("");
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  function goToParkPage(parkCode) {
+    navigate(`/park/${parkCode}`);
+  }
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  /*const { locationState, locationDispatch } = useContext(LocationContext);
+  const addLocation = () => {
+    locationDispatch({
+      type: LocationActions.ADD,
+      location: { title: parks.parkCode },
+    });
+  };*/
+  const { dispatch } = useContext(LocationContext);
+  const addLocation = (selectedPark) => {
+    dispatch({ type: LocationActions.ADD, location: selectedPark });
   };
 
-  /* const handleCloseNavMenu = (page) => {
-    setAnchorElNav(null);
-    if (page) {
-      navigate(page.path);
-    }
-  };*/
-
   return (
-    <Box classlabel="backgroound">
-      <Box classlabel="info">
-        <Autocomplete
-          className="searchBar"
-          disablePortal
-          id="combo-box-demo"
-          options={us_states}
-          sx={{ width: 300 }}
-          getOptionLabel={(option) => option.label}
-          value={stateCode}
-          onChange={handleChange}
-          renderInput={(params) => (
-            <TextField {...params} label="Enter A State: " />
-          )}
-        />
-        <Button variant="contained" color="primary" onClick={handleSearch}>
-          Search
-        </Button>
+    <Box classlabel="background">
+      <Box className="searchResult">
+        <ImageCarouselRoot>
+          <Carousel
+            showArrows
+            showThumbs={true}
+            showStatus={true}
+            infiniteLoop
+            autoPlay
+            interval={9000}
+          >
+            {images.map((src) => (
+              <img src={src} key={src} alt="Carousel item" />
+            ))}
+          </Carousel>
+        </ImageCarouselRoot>
 
-        <Box className="parksList" width="75%">
-          <List>
-            {parks.map((park) => (
-              <ListItem key={park.id}>
-                <Box
-                  width="30%"
-                  overflow="hidden"
-                  minWidth="20%"
-                  marginRight="8px"
-                >
-                  <img
-                    alt={park.fullName}
-                    src={park.images[0]?.url}
-                    height="150px"
-                    width="100%"
-                  />
-                </Box>
-                <Box>
-                  <ListItemText
-                    className="parkDesc"
-                    primary={park.fullName}
-                    secondary={park.description}
-                  />
-                  <Link to={`/park/${park.parkCode}`}>
+        <Box>
+          <Box className="searchBox" display="flex">
+            <Autocomplete
+              className="searchBar"
+              disablePortal
+              id="combo-box-demo"
+              options={us_states}
+              sx={{ width: 300 }}
+              getOptionLabel={(option) => option.label}
+              value={stateCode}
+              onChange={handleChange}
+              renderInput={(params) => (
+                <TextField
+                  sx={{ border: " solid 2px #1c3c23" }}
+                  className="searchTextField"
+                  {...params}
+                  label="Enter A State: "
+                />
+              )}
+            />
+            <Button variant="contained" color="primary" onClick={handleSearch}>
+              Search
+            </Button>
+          </Box>
+        </Box>
+        <Box>
+          <Box className="parksList" width="75%">
+            <List>
+              {parks.map((park) => (
+                <ListItem key={park.id}>
+                  <Box
+                    width="30%"
+                    overflow="hidden"
+                    minWidth="20%"
+                    marginRight="8px"
+                  >
+                    <img
+                      alt={park.fullName}
+                      src={park.images[0]?.url}
+                      height="150px"
+                      width="100%"
+                    />
+                  </Box>
+                  <Box>
+                    <ListItemText
+                      className="parkDesc"
+                      primary={park.fullName}
+                      secondary={park.description}
+                    />
                     <Button
                       variant="contained"
-                      //onClick={() => handleCloseNavMenu(page)}
+                      onClick={() => goToParkPage(park.parkCode)}
                     >
                       View More
                     </Button>
-                  </Link>
 
-                  <IconButton aria-label="delete" size="large">
-                    <AddLocationIcon fontSize="inherit" />
-                  </IconButton>
-                </Box>
-                <Divider />
-              </ListItem>
-            ))}
-          </List>
+                    <IconButton
+                      aria-label="delete"
+                      size="large"
+                      onClick={() => addLocation(park.parkCode)}
+                    >
+                      <AddLocationIcon fontSize="inherit" />
+                    </IconButton>
+                  </Box>
+                  <Divider />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </Box>
       </Box>
     </Box>
   );
-}
+};
