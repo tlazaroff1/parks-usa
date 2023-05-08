@@ -54,7 +54,7 @@ export function Map() {
   return isLoaded ? (
     <Box className="background" backgroundImage="./../../map2.jpg">
       <Box className="info" display="flex">
-        <Box width="30%" height="500px">
+        <Box className="selectedParks" width="30%" height="500px">
           <Drawer
             sx={{
               width: "100%",
@@ -69,7 +69,12 @@ export function Map() {
             position="relative"
           >
             <Toolbar>
-              <Typography variant="h6" align="center" marginLeft="6px">
+              <Typography
+                className="titles"
+                variant="h6"
+                align="center"
+                marginLeft="6px"
+              >
                 Selected Parks:
               </Typography>
             </Toolbar>

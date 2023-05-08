@@ -1,4 +1,10 @@
 .info {
-  margin-top: 15px !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px;
   border: 2px solid #1c3c23;
+  border-radius: 3pt;
+}
+
+.selectedParks {
+  background-color: white;
 }
