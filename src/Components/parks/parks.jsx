@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box } from "@mui/material";
-import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
 import "./../../App.css";
 import "./parks.css";
 import { styled } from "@mui/material/styles";
@@ -24,11 +24,11 @@ export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
   const ImageCarouselRoot = styled("div")(({ theme }) => ({
     width: "100%",
-    height: "400px",
+    height: "500px",
     margin: "auto",
     "& img": {
       width: "100%",
-      height: "350px",
+      height: "450px",
       display: "block",
       objectFit: "cover",
     },
@@ -126,91 +126,100 @@ export const Parks = (props) => {
   };
 
   return (
-    <Box classlabel="background">
-      <Box className="searchResult">
-        <ImageCarouselRoot>
-          <Carousel
-            showArrows
-            showThumbs={true}
-            showStatus={true}
-            infiniteLoop
-            autoPlay
-            interval={9000}
-          >
-            {images.map((src) => (
-              <img src={src} key={src} alt="Carousel item" />
-            ))}
-          </Carousel>
-        </ImageCarouselRoot>
-
-        <Box>
-          <Box className="searchBox" display="flex">
-            <Autocomplete
-              className="searchBar"
-              disablePortal
-              id="combo-box-demo"
-              options={us_states}
-              sx={{ width: 300 }}
-              getOptionLabel={(option) => option.label}
-              value={stateCode}
-              onChange={handleChange}
-              renderInput={(params) => (
-                <TextField
-                  sx={{ border: " solid 2px #1c3c23" }}
-                  className="searchTextField"
-                  {...params}
-                  label="Enter A State: "
-                />
-              )}
+    <Box>
+      <ImageCarouselRoot sx={{}}>
+        <Carousel
+          showArrows
+          showThumbs={true}
+          showStatus={true}
+          infiniteLoop
+          autoPlay
+          interval={9000}
+        >
+          {images.map((src) => (
+            <img src={src} key={src} alt="Carousel item" />
+          ))}
+        </Carousel>
+      </ImageCarouselRoot>
+      <Box
+        className="searchBox"
+        display="flex"
+        // position="absolute"
+        zIndex="1"
+        width="50%"
+      >
+        <Autocomplete
+          className="searchBar"
+          disablePortal
+          id="combo-box-demo"
+          options={us_states}
+          sx={{ width: "100%" }}
+          getOptionLabel={(option) => option.label}
+          value={stateCode}
+          onChange={handleChange}
+          renderInput={(params) => (
+            <TextField
+              sx={{ border: " solid 2px #1c3c23" }}
+              className="searchTextField"
+              {...params}
+              label="Enter A State: "
             />
-            <Button variant="contained" color="primary" onClick={handleSearch}>
-              Search
-            </Button>
-          </Box>
-        </Box>
-        <Box>
-          <Box className="parksList" width="75%">
-            <List>
-              {parks.map((park) => (
-                <ListItem key={park.id}>
-                  <Box
-                    width="30%"
-                    overflow="hidden"
-                    minWidth="20%"
-                    marginRight="8px"
-                  >
-                    <img
-                      alt={park.fullName}
-                      src={park.images[0]?.url}
-                      height="150px"
-                      width="100%"
-                    />
-                  </Box>
-                  <Box>
-                    <ListItemText
-                      className="parkDesc"
-                      primary={park.fullName}
-                      secondary={park.description}
-                    />
-                    <Button
-                      variant="contained"
-                      onClick={() => goToParkPage(park.parkCode)}
-                    >
-                      View More
-                    </Button>
+          )}
+        />
+        <Button variant="contained" color="primary" onClick={handleSearch}>
+          Search
+        </Button>
+      </Box>
 
-                    <IconButton
-                      aria-label="delete"
-                      size="large"
-                      onClick={() => addLocation(park.parkCode)}
-                    >
-                      <AddLocationIcon fontSize="inherit" />
-                    </IconButton>
+      <Box className="background">
+        <Box className="searchResult" width="90%">
+          <Box>
+            <Box className="parksList" width="75%">
+              <List>
+                {parks.map((park) => (
+                  <Box className="listItem">
+                    <ListItem key={park.id}>
+                      <Box
+                        width="30%"
+                        overflow="hidden"
+                        minWidth="20%"
+                        marginRight="8px"
+                      >
+                        <img
+                          alt={park.fullName}
+                          src={park.images[0]?.url}
+                          height="150px"
+                          width="100%"
+                        />
+                      </Box>
+                      <Box>
+                        <ListItemText
+                          className="parkDesc"
+                          primary={park.fullName}
+                          secondary={park.description}
+                        />
+                        <Button
+                          variant="contained"
+                          onClick={() => goToParkPage(park.parkCode)}
+                        >
+                          View More
+                        </Button>
+
+                        <IconButton
+                          aria-label="delete"
+                          size="large"
+                          onClick={() => addLocation(park.parkCode)}
+                        >
+                          <AddLocationAltRoundedIcon fontSize="3rem" />
+                        </IconButton>
+                      </Box>
+
+                      <Divider />
+                    </ListItem>
                   </Box>
-                  <Divider />
-                </ListItem>
-              ))}
-            </List>
+                ))}
+              </List>
+            </Box>
           </Box>
         </Box>
       </Box>

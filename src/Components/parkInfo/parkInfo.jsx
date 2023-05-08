@@ -45,45 +45,47 @@ export function ParkInfo() {
   }));
 
   return (
-    <Box width="85%" margin="auto auto auto auto">
-      <Typography className="titles">{park.fullName}</Typography>
-      <ImageCarouselRoot>
-        <Carousel
-          showArrows
-          showThumbs={true}
-          showStatus={true}
-          infiniteLoop
-          autoPlay
-          interval={9000}
-        >
-          {images.map((src) => (
-            <img src={src} key={src} alt="Carousel item" />
-          ))}
-        </Carousel>
-      </ImageCarouselRoot>
-      <Box>{park.description}</Box>
-      <Box>
-        <Typography>Location:</Typography>
-        <Divider />
-        <Typography>{park.address}</Typography>
-      </Box>
-
-      <Box>
-        <Typography>Hours:</Typography>
-        {park.operatingHours.map((hours, index) => (
-          <Box key={index}>
-            <Typography>{hours.name}</Typography>
-            <Typography>{hours.description}</Typography>
-          </Box>
-        ))}
-      </Box>
-
-      {park.url && (
+    <Box className="background">
+      <Box className="searchResult" width="90%" margin="auto auto auto auto">
+        <Typography className="titles">{park.fullName}</Typography>
+        <ImageCarouselRoot>
+          <Carousel
+            showArrows
+            showThumbs={true}
+            showStatus={true}
+            infiniteLoop
+            autoPlay
+            interval={9000}
+          >
+            {images.map((src) => (
+              <img src={src} key={src} alt="Carousel item" />
+            ))}
+          </Carousel>
+        </ImageCarouselRoot>
+        <Box>{park.description}</Box>
         <Box>
-          <Typography>Website:</Typography>
-          <a href={park.url}>{park.url}</a>
+          <Typography>Location:</Typography>
+          <Divider />
+          <Typography>{park.address}</Typography>
         </Box>
-      )}
+
+        <Box>
+          <Typography>Hours:</Typography>
+          {park.operatingHours.map((hours, index) => (
+            <Box key={index}>
+              <Typography>{hours.name}</Typography>
+              <Typography>{hours.description}</Typography>
+            </Box>
+          ))}
+        </Box>
+
+        {park.url && (
+          <Box>
+            <Typography>Website:</Typography>
+            <a href={park.url}>{park.url}</a>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 }

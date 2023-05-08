@@ -8,9 +8,6 @@
 .parkDesc {
   align-self: flex-start !important;
 }
-
-.background {
-}
 .searchResult {
   margin: auto auto auto auto;
 }
@@ -18,7 +15,12 @@
   margin: auto auto auto auto !important;
 }
 .searchBar {
-  width: 50% !important;
-  /*  border: 1.5px solid #1c3c23 !important;
-  border-radius: 3pt;*/
+  margin: auto auto auto auto !important;
+}
+.listItem {
+  border: 1.5px solid #1c3c23 !important;
+  border-radius: 3pt;
+  margin-bottom: 10pt;
+}
+.background {
 }

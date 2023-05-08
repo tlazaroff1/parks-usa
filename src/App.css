@@ -12,11 +12,12 @@
 }
 
 .background {
-  background-image: "./map2.jpg";
+  background-color: #1c3c23;
   width: 100% !important;
-  height: 100% !important;
 }
-
+.searchResult {
+  background-color: white;
+}
 .info {
   width: 90% !important;
   height: 60% !important;
