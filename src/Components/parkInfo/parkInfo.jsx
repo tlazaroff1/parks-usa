@@ -1,10 +1,22 @@
 import { useParams } from "react-router";
 //import { useSelector } from "react-redux";
-import { Box, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Typography,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/material/styles";
 import "./../../App.css";
+import "./parkInfo.css";
+import AmenitiesIcons from "../parkAmenities/amenities";
+import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+
 export function ParkInfo() {
   const [park, setPark] = useState("");
   const { id } = useParams();
@@ -62,29 +74,77 @@ export function ParkInfo() {
             ))}
           </Carousel>
         </ImageCarouselRoot>
-        <Box>{park.description}</Box>
-        <Box>
-          <Typography>Location:</Typography>
-          <Divider />
-          <Typography>{park.address}</Typography>
+        <Box className="displayInfo">{park.description}</Box>
+        <Divider />
+        <Box className="displayInfo">
+          <Typography>Amenities</Typography>
+          <AmenitiesIcons parkCode={park.parkCode} />
         </Box>
-
-        <Box>
+        <Divider />
+        <Box className="displayInfo">
           <Typography>Hours:</Typography>
           {park.operatingHours.map((hours, index) => (
             <Box key={index}>
               <Typography>{hours.name}</Typography>
-              <Typography>{hours.description}</Typography>
+              {Object.keys(hours.standardHours).map((day, index) => (
+                <Typography key={index}>
+                  {day.charAt(0).toUpperCase() + day.slice(1)}:{" "}
+                  {hours.standardHours[day] === "All Day"
+                    ? "24 hours"
+                    : hours.standardHours[day]}
+                </Typography>
+              ))}
             </Box>
           ))}
         </Box>
-
-        {park.url && (
-          <Box>
-            <Typography>Website:</Typography>
-            <a href={park.url}>{park.url}</a>
-          </Box>
-        )}
+        <Divider />
+        <Box className="displayInfo">
+          {park.url && (
+            <Box>
+              <Typography>Website:</Typography>
+              <a href={park.url}>{park.url}</a>
+            </Box>
+          )}
+        </Box>
+        <Divider />
+        <Box className="displayInfo">
+          <ListItem>
+            <ListItemIcon>
+              <LocalPhoneRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={park.contacts.phoneNumbers[0].phoneNumber} />
+          </ListItem>
+          {park.contacts.emailAddresses.map((emailAddress, index) => (
+            <ListItem key={index}>
+              <ListItemIcon>
+                <EmailRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary={emailAddress.emailAddress} />
+            </ListItem>
+          ))}
+        </Box>
+        <Divider />
+        <Box className="displayInfo">
+          <Typography>Entrance Fees:</Typography>
+          {park.entranceFees.map((fee, index) => (
+            <Typography key={index}>
+              {fee.title}: {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
+            </Typography>
+          ))}
+        </Box>
+        <Divider />
+        <Box className="displayInfo">
+          <Typography>Addresses:</Typography>
+          {park.addresses.map((address, index) => (
+            <Box key={index}>
+              <Typography>
+                {address.type} Address: {address.line1}, {address.city},{" "}
+                {address.stateCode} {address.postalCode}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+        <Divider />
       </Box>
     </Box>
   );

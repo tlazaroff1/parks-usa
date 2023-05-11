@@ -5,6 +5,7 @@ import * as React from "react";
 import { ParkInfo } from "./Components/parkInfo/parkInfo";
 import { HashRouter, Routes, Route, useParams } from "react-router-dom";
 import { Header } from "./Components/header/header";
+import { LocationContext } from "./Components/state/locations/location-context";
 
 /*export default function App() {
   const { isLoaded } = useLoadScript({
@@ -14,9 +15,13 @@ import { Header } from "./Components/header/header";
   return isLoaded ? <Map /> : null;
 }*/
 function App() {
+  // const [locationState, locationDispatch] = useReducer(locationReducer, {
+  //   locations: [],
+  // });
   return (
     <HashRouter>
       <Header />
+      {/*<LocationContext.Provider value={{ locationState, locationDispatch }}> */}
       <Routes>
         {/* http://localhost:3000/#/ */}
         <Route path="/" element={<Parks />} />
