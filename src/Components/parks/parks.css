@@ -22,5 +22,6 @@
   border-radius: 3pt;
   margin-bottom: 10pt;
 }
-.background {
+.addLoc:checked {
+  color: #1c3c23;
 }

@@ -8,7 +8,6 @@ import Carousel from "react-material-ui-carousel";
 import { Divider } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LocationActions } from "../state/locations/location-reducer";
 import { LocationContext } from "../state/locations/location-context";
@@ -18,7 +17,6 @@ import bryceCanyon from "./../../bryce-canyon1.jpg";
 import glacier from "./../../glacier.jpg";
 import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
-import forest from "./../../forest.jpg";
 
 export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
@@ -113,41 +111,27 @@ export const Parks = (props) => {
     navigate(`/park/${parkCode}`);
   }
 
-  /*const { locationState, locationDispatch } = useContext(LocationContext);
-  const addLocation = () => {
+  const { locationDispatch } = useContext(LocationContext);
+  function addLocation(parkCode, parkName, longitude, latitude) {
     locationDispatch({
       type: LocationActions.ADD,
-      location: { title: parks.parkCode },
+      code: parkCode,
+      name: parkName,
+      long: longitude,
+      lat: latitude,
     });
-  };*/
-  const { dispatch } = useContext(LocationContext);
-  const addLocation = (selectedPark) => {
-    dispatch({ type: LocationActions.ADD, location: selectedPark });
-  };
+    console.log(parkCode);
+    console.log(parkName);
+    //console.log(parkAddress);
+    console.log(longitude);
+    console.log(latitude);
+
+    console.log("in function");
+  }
 
   return (
     <Box>
-      <ImageCarouselRoot sx={{}}>
-        <Carousel
-          showArrows
-          showThumbs={true}
-          showStatus={true}
-          infiniteLoop
-          autoPlay
-          interval={9000}
-        >
-          {images.map((src) => (
-            <img src={src} key={src} alt="Carousel item" />
-          ))}
-        </Carousel>
-      </ImageCarouselRoot>
-      <Box
-        className="searchBox"
-        display="flex"
-        // position="absolute"
-        zIndex="1"
-        width="50%"
-      >
+      <Box className="searchBox" display="flex" width="50%" padding="10px">
         <Autocomplete
           className="searchBar"
           disablePortal
@@ -170,54 +154,79 @@ export const Parks = (props) => {
           Search
         </Button>
       </Box>
-
+      <Box>
+        <ImageCarouselRoot sx={{}}>
+          <Carousel
+            showArrows
+            showThumbs={true}
+            showStatus={true}
+            infiniteLoop
+            autoPlay
+            interval={9000}
+          >
+            {images.map((src) => (
+              <img src={src} key={src} alt="Carousel item" />
+            ))}
+          </Carousel>
+        </ImageCarouselRoot>
+      </Box>
       <Box className="background">
         <Box className="searchResult" width="90%">
           <Box>
             <Box className="parksList" width="75%">
               <List>
-                {parks.map((park) => (
-                  <Box className="listItem">
-                    <ListItem key={park.id}>
-                      <Box
-                        width="30%"
-                        overflow="hidden"
-                        minWidth="20%"
-                        marginRight="8px"
-                      >
-                        <img
-                          alt={park.fullName}
-                          src={park.images[0]?.url}
-                          height="150px"
-                          width="100%"
-                        />
-                      </Box>
-                      <Box>
-                        <ListItemText
-                          className="parkDesc"
-                          primary={park.fullName}
-                          secondary={park.description}
-                        />
-                        <Button
-                          variant="contained"
-                          onClick={() => goToParkPage(park.parkCode)}
+                {parks.map((park) => {
+                  return (
+                    <Box className="listItem">
+                      <ListItem key={park.id}>
+                        <Box
+                          width="30%"
+                          overflow="hidden"
+                          minWidth="20%"
+                          marginRight="8px"
                         >
-                          View More
-                        </Button>
+                          <img
+                            alt={park.fullName}
+                            src={park.images[0]?.url}
+                            height="150px"
+                            width="100%"
+                          />
+                        </Box>
+                        <Box>
+                          <ListItemText
+                            className="parkDesc"
+                            primary={park.fullName}
+                            secondary={park.description}
+                          />
+                          <Button
+                            variant="contained"
+                            onClick={() => goToParkPage(park.parkCode)}
+                          >
+                            View More
+                          </Button>
 
-                        <IconButton
-                          aria-label="delete"
-                          size="large"
-                          onClick={() => addLocation(park.parkCode)}
-                        >
-                          <AddLocationAltRoundedIcon fontSize="3rem" />
-                        </IconButton>
-                      </Box>
+                          <IconButton
+                            aria-label="delete"
+                            size="large"
+                            className="addLoc"
+                            onClick={() =>
+                              addLocation(
+                                park.parkCode,
+                                park.fullName,
+                                park.longitude,
+                                park.latitude
+                              )
+                            }
+                          >
+                            <AddLocationAltRoundedIcon fontSize="3rem" />
+                          </IconButton>
+                        </Box>
 
-                      <Divider />
-                    </ListItem>
-                  </Box>
-                ))}
+                        <Divider />
+                      </ListItem>
+                    </Box>
+                  );
+                })}
               </List>
             </Box>
           </Box>

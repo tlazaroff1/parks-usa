@@ -18,8 +18,12 @@ import "./../../App.css";
 import "./map.css";
 import { useContext } from "react";
 import { LocationContext } from "../state/locations/location-context";
+import { LocationActions } from "../state/locations/location-reducer";
 import { List, ListItem, ListItemText } from "@mui/material";
-const markers = [
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+/*const markers = [
   {
     id: 1,
     name: "Trail Of Tears National Historic Trail",
@@ -32,19 +36,11 @@ const markers = [
     address: "1055 Pittsburg Landing Road, Shiloh, TN 38376",
     position: { lat: 35.13850907, lng: -88.3421072 },
   },
-  /* {
-    id: 3,
-    name: "Los Angeles, California",
-    position: { lat: 34.052235, lng: -118.243683 },
-  },
-  {
-    id: 4,
-    name: "New York, New York",
-    position: { lat: 40.712776, lng: -74.005974 },
-  },*/
-];
+];*/
 
 export function Map() {
+  const { locations } = useContext(LocationContext);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyByo_ZcTT1MrLsO6EeWflKqlV-PMvgp8Vo",
   });
@@ -64,7 +60,26 @@ export function Map() {
   };
 
   const { locationState, locationDispatch } = useContext(LocationContext);
+  const markers = locationState.locations.map((location, index) => ({
+    id: index,
+    code: location.code,
+    name: location.name,
+    position: { lat: parseFloat(location.lat), lng: parseFloat(location.long) },
+  }));
+  function removePark(id) {
+    const location = locationState.locations[id];
+    locationDispatch({
+      type: LocationActions.DELETE,
+      location,
+    });
+  }
+  const navigate = useNavigate();
 
+  function goToParkPage(id, code) {
+    const parkCode = locationState.locations[id].code;
+
+    navigate(`/park/${parkCode}`);
+  }
   return isLoaded ? (
     <Box className="background" backgroundImage="./../../map2.jpg">
       <Box className="info" display="flex">
@@ -94,16 +109,11 @@ export function Map() {
             </Toolbar>
             <Divider className="divider"></Divider>
             <List>
-              {markers.map(({ id, name, address, position }) => (
+              {markers.map(({ id, name }) => (
                 <Button onClick={() => handleActiveMarker(id)}>
                   <ListItem>{name}</ListItem>
                 </Button>
               ))}
-              {/* {locationState.locations.map((location, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={location.name} />
-            </ListItem>
-         ))}*/}
             </List>
           </Drawer>
         </Box>
@@ -133,8 +143,10 @@ export function Map() {
                           </Typography>
                         </CardContent>
                         <CardActions sx={{ padding: "3px" }}>
-                          <Button size="small">View More</Button>
-                          <IconButton>
+                          <Button size="small" onClick={() => goToParkPage(id)}>
+                            View More
+                          </Button>
+                          <IconButton onClick={() => removePark(id)}>
                             <DeleteIcon />
                           </IconButton>
                         </CardActions>

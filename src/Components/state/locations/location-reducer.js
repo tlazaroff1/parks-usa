@@ -9,12 +9,20 @@ export const LocationActions = {
 export const locationReducer = (state, action) => {
   switch (action.type) {
     case LocationActions.ADD: {
-      return { locations: [...state.locations, action.location] };
+      const newLocation = {
+        code: action.code,
+        name: action.name,
+        address: action.address,
+        long: action.long,
+        lat: action.lat,
+        isComplete: false,
+      };
+      return { locations: [...state.locations, newLocation] };
     }
     case LocationActions.TOGGLE: {
       let newLocations = cloneDeep(state.locations);
       const updatedLocations = newLocations.find(
-        (x) => x.title === action.todo.title
+        (x) => x.code === action.location.code
       );
       updatedLocations.isComplete = !updatedLocations.isComplete;
       return {
@@ -23,7 +31,7 @@ export const locationReducer = (state, action) => {
     }
     case LocationActions.DELETE: {
       let newLocations = state.locations.filter(
-        (x) => !(x.title === action.todo.title)
+        (x) => !(x.code === action.location.code)
       );
       return {
         locations: newLocations,

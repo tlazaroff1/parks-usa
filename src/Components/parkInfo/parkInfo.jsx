@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  IconButton,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
@@ -16,6 +17,10 @@ import "./parkInfo.css";
 import AmenitiesIcons from "../parkAmenities/amenities";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
+import { useContext } from "react";
+import { LocationActions } from "../state/locations/location-reducer";
+import { LocationContext } from "../state/locations/location-context";
 
 export function ParkInfo() {
   const [park, setPark] = useState("");
@@ -43,6 +48,7 @@ export function ParkInfo() {
   if (!park) {
     return <div>Loading...</div>;
   }
+
   const images = park.images.map((image) => image.url);
   const ImageCarouselRoot = styled("div")(({ theme }) => ({
     width: "100%",
@@ -56,10 +62,34 @@ export function ParkInfo() {
     },
   }));
 
+  /* const { locationDispatch } = useContext(LocationContext);
+  function addLocation(parkCode) {
+    locationDispatch({
+      type: LocationActions.ADD,
+      code: parkCode,
+    });
+    console.log(parkCode);
+    console.log("in function");
+  }*/
+
   return (
     <Box className="background">
       <Box className="searchResult" width="90%" margin="auto auto auto auto">
-        <Typography className="titles">{park.fullName}</Typography>
+        <Typography className="titles">
+          {park.fullName}
+          <IconButton
+            aria-label="delete"
+            size="large"
+            className="addLocButton"
+            sx={{ backgroundColor: "#6b460c", radius: "50%", edge: "end" }}
+            //OnClick={() => addLocation(park.parkCode)}
+          >
+            <AddLocationAltRoundedIcon
+              fontSize="3rem"
+              sx={{ color: "white" }}
+            />
+          </IconButton>
+        </Typography>
         <ImageCarouselRoot>
           <Carousel
             showArrows
@@ -74,6 +104,7 @@ export function ParkInfo() {
             ))}
           </Carousel>
         </ImageCarouselRoot>
+
         <Box className="displayInfo">{park.description}</Box>
         <Divider />
         <Box className="displayInfo">

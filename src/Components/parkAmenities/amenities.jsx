@@ -59,11 +59,11 @@ function AmenitiesIcons({ parkCode }) {
 
   return (
     <div>
-      {amenitiesIcons.map((amenity, index) => (
-        <img src={amenity.icon} alt={amenity.name} key={index} />
-      ))}
+      {amenitiesIcons.map((amenity, index) => {
+        const Icon = amenity.icon;
+        return <Icon src={amenity.icon} alt={amenity.name} key={index} />;
+      })}
     </div>
   );
 }
-
 export default AmenitiesIcons;
