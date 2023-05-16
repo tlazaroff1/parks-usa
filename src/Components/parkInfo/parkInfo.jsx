@@ -1,5 +1,4 @@
 import { useParams } from "react-router";
-//import { useSelector } from "react-redux";
 import {
   Box,
   Divider,
@@ -75,7 +74,10 @@ export function ParkInfo() {
   return (
     <Box className="background">
       <Box className="searchResult" width="90%" margin="auto auto auto auto">
-        <Typography className="titles">
+        <Typography
+          className="titles"
+          sx={{ paddingTop: "15px", paddingBottom: "15px" }}
+        >
           {park.fullName}
           <IconButton
             aria-label="delete"
@@ -105,18 +107,20 @@ export function ParkInfo() {
           </Carousel>
         </ImageCarouselRoot>
 
-        <Box className="displayInfo">{park.description}</Box>
+        <Box className="displayInfo">
+          <Typography>{park.description}</Typography>
+        </Box>
         <Divider />
         <Box className="displayInfo">
-          <Typography>Amenities</Typography>
+          <Typography className="InfoTitle">Amenities</Typography>
           <AmenitiesIcons parkCode={park.parkCode} />
         </Box>
         <Divider />
         <Box className="displayInfo">
-          <Typography>Hours:</Typography>
+          <Typography className="InfoTitle">Hours:</Typography>
           {park.operatingHours.map((hours, index) => (
             <Box key={index}>
-              <Typography>{hours.name}</Typography>
+              <Typography className="secondaryTitle">{hours.name}</Typography>
               {Object.keys(hours.standardHours).map((day, index) => (
                 <Typography key={index}>
                   {day.charAt(0).toUpperCase() + day.slice(1)}:{" "}
@@ -132,7 +136,7 @@ export function ParkInfo() {
         <Box className="displayInfo">
           {park.url && (
             <Box>
-              <Typography>Website:</Typography>
+              <Typography className="InfoTitle">Website:</Typography>
               <a href={park.url}>{park.url}</a>
             </Box>
           )}
@@ -156,7 +160,7 @@ export function ParkInfo() {
         </Box>
         <Divider />
         <Box className="displayInfo">
-          <Typography>Entrance Fees:</Typography>
+          <Typography className="InfoTitle">Entrance Fees:</Typography>
           {park.entranceFees.map((fee, index) => (
             <Typography key={index}>
               {fee.title}: {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
@@ -165,7 +169,7 @@ export function ParkInfo() {
         </Box>
         <Divider />
         <Box className="displayInfo">
-          <Typography>Addresses:</Typography>
+          <Typography className="InfoTitle">Addresses:</Typography>
           {park.addresses.map((address, index) => (
             <Box key={index}>
               <Typography>

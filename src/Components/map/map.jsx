@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 import {
@@ -12,31 +12,15 @@ import {
   CardActions,
   Card,
   CardContent,
+  List,
+  ListItem,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./../../App.css";
 import "./map.css";
-import { useContext } from "react";
 import { LocationContext } from "../state/locations/location-context";
 import { LocationActions } from "../state/locations/location-reducer";
-import { List, ListItem, ListItemText } from "@mui/material";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-/*const markers = [
-  {
-    id: 1,
-    name: "Trail Of Tears National Historic Trail",
-    address: "National Trails Office Regions 6|7|8, Santa Fe, NM 87505",
-    position: { lat: 36.0530021046, lng: -89.6761041963 },
-  },
-  {
-    id: 2,
-    name: "Shiloh National Military Park",
-    address: "1055 Pittsburg Landing Road, Shiloh, TN 38376",
-    position: { lat: 35.13850907, lng: -88.3421072 },
-  },
-];*/
 
 export function Map() {
   const { locations } = useContext(LocationContext);
@@ -81,7 +65,7 @@ export function Map() {
     navigate(`/park/${parkCode}`);
   }
   return isLoaded ? (
-    <Box className="background" backgroundImage="./../../map2.jpg">
+    <Box className="background">
       <Box className="info" display="flex">
         <Box className="selectedParks" width="30%" height="500px">
           <Drawer
@@ -111,7 +95,16 @@ export function Map() {
             <List>
               {markers.map(({ id, name }) => (
                 <Button onClick={() => handleActiveMarker(id)}>
-                  <ListItem>{name}</ListItem>
+                  <ListItem
+                    sx={{
+                      color: "black",
+                      fontWeight: "400",
+                      textTransform: "inherit",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {name}
+                  </ListItem>
                 </Button>
               ))}
             </List>

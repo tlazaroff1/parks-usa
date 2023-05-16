@@ -1,8 +1,6 @@
 .parksList {
   margin: auto auto auto auto !important;
   border-radius: 10pt;
-  /*max-height: 900px;
-  overflow: auto;*/
 }
 
 .parkDesc {
@@ -13,6 +11,7 @@
 }
 .searchBox {
   margin: auto auto auto auto !important;
+  flex-direction: column;
 }
 .searchBar {
   margin: auto auto auto auto !important;
@@ -24,4 +23,9 @@
 }
 .addLoc:checked {
   color: #1c3c23;
+}
+
+.img {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
 }

@@ -31,3 +31,10 @@
   margin: auto auto auto auto;
   text-align: center;
 }
+.banner {
+  font-family: "Economica", sans-serif !important;
+  font-size: 6.5rem !important;
+  margin: auto auto auto auto;
+  text-align: center;
+  color: white;
+}

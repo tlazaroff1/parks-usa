@@ -1,24 +1,33 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Autocomplete,
+  TextField,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
 import "./../../App.css";
 import "./parks.css";
 import { styled } from "@mui/material/styles";
 import Carousel from "react-material-ui-carousel";
-import { Divider } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { LocationActions } from "../state/locations/location-reducer";
 import { LocationContext } from "../state/locations/location-context";
-import { Button, List, ListItem, ListItemText } from "@mui/material";
-import { Autocomplete, TextField, IconButton } from "@mui/material";
 import bryceCanyon from "./../../bryce-canyon1.jpg";
 import glacier from "./../../glacier.jpg";
 import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
+import { ImageCarousel } from "../carousel/carousel";
 
-export const Parks = (props) => {
+export function Parks() {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
   const ImageCarouselRoot = styled("div")(({ theme }) => ({
     width: "100%",
@@ -110,16 +119,18 @@ export const Parks = (props) => {
   function goToParkPage(parkCode) {
     navigate(`/park/${parkCode}`);
   }
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const { locationDispatch } = useContext(LocationContext);
   function addLocation(parkCode, parkName, longitude, latitude) {
-    locationDispatch({
-      type: LocationActions.ADD,
+    const newLocation = {
       code: parkCode,
       name: parkName,
       long: longitude,
       lat: latitude,
-    });
+      isComplete: false,
+    };
+    locationDispatch({ type: LocationActions.ADD, ...newLocation });
     console.log(parkCode);
     console.log(parkName);
     //console.log(parkAddress);
@@ -129,46 +140,91 @@ export const Parks = (props) => {
     console.log("in function");
   }
 
+  const textTitleStyle = {
+    color: "#6b460c",
+    fontFamily: "'Economica', sans-serif",
+    fontSize: "1.5rem",
+  };
+
   return (
-    <Box>
-      <Box className="searchBox" display="flex" width="50%" padding="10px">
+    <Box position="relative">
+      <Box
+        sx={{
+          position: "relative",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: "0",
+        }}
+      >
+        <ImageCarousel images={images} />
+      </Box>
+      <Box
+        className="searchBox"
+        display="flex"
+        width="70%"
+        padding="10px"
+        margin="auto auto auto auto"
+        sx={{
+          position: "absolute",
+          zIndex: "2",
+          top: "150px",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
+        <Typography
+          className="banner"
+          sx={{
+            textOutline: "1px solid #6b460c",
+            WebkitTextStroke: "1px #6b460c",
+          }}
+        >
+          Start Planning Here
+        </Typography>
         <Autocomplete
           className="searchBar"
           disablePortal
           id="combo-box-demo"
           options={us_states}
-          sx={{ width: "100%" }}
+          sx={{ width: "60%" }}
           getOptionLabel={(option) => option.label}
           value={stateCode}
           onChange={handleChange}
           renderInput={(params) => (
             <TextField
-              sx={{ border: " solid 2px #1c3c23" }}
+              sx={{
+                fieldset: {
+                  borderColor: "#6b460c",
+                  background: "white",
+                  zIndex: "-1",
+                  borderRadius: "10px",
+                },
+              }}
+              id="outlined-basic"
               className="searchTextField"
               {...params}
-              label="Enter A State: "
-            />
+              placeholder="Enter A State: "
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <IconButton
+                    position="start"
+                    aria-label="delete"
+                    size="large"
+                    onClick={handleSearch}
+                  >
+                    <SearchRoundedIcon
+                      fontSize="large"
+                      sx={{ color: "#1c3c23" }}
+                    />
+                  </IconButton>
+                ),
+                disableUnderline: true,
+              }}
+            ></TextField>
           )}
-        />
-        <Button variant="contained" color="primary" onClick={handleSearch}>
-          Search
-        </Button>
-      </Box>
-      <Box>
-        <ImageCarouselRoot sx={{}}>
-          <Carousel
-            showArrows
-            showThumbs={true}
-            showStatus={true}
-            infiniteLoop
-            autoPlay
-            interval={9000}
-          >
-            {images.map((src) => (
-              <img src={src} key={src} alt="Carousel item" />
-            ))}
-          </Carousel>
-        </ImageCarouselRoot>
+        ></Autocomplete>
       </Box>
       <Box className="background">
         <Box className="searchResult" width="90%">
@@ -177,8 +233,8 @@ export const Parks = (props) => {
               <List>
                 {parks.map((park) => {
                   return (
-                    <Box className="listItem">
-                      <ListItem key={park.id}>
+                    <Box className="listItem" sx={{ height: "200px" }}>
+                      <ListItem key={park.id} sx={{ padding: "0 0 0 0" }}>
                         <Box
                           width="30%"
                           overflow="hidden"
@@ -186,21 +242,28 @@ export const Parks = (props) => {
                           marginRight="8px"
                         >
                           <img
+                            height="200px"
                             alt={park.fullName}
                             src={park.images[0]?.url}
-                            height="150px"
                             width="100%"
+                            className="img"
                           />
                         </Box>
-                        <Box>
+                        <Box sx={{ padding: "5px 5px 5px 5px" }}>
                           <ListItemText
                             className="parkDesc"
+                            primaryTypographyProps={{ style: textTitleStyle }}
                             primary={park.fullName}
                             secondary={park.description}
                           />
                           <Button
                             variant="contained"
                             onClick={() => goToParkPage(park.parkCode)}
+                            sx={{
+                              border: "1.5px solid #6b460c ",
+                              background: "white",
+                              color: "#6b460c ",
+                            }}
                           >
                             View More
                           </Button>
@@ -217,8 +280,18 @@ export const Parks = (props) => {
                                 park.latitude
                               )
                             }
+                            style={{
+                              backgroundColor: buttonClicked
+                                ? "white"
+                                : "white",
+                            }} // conditionally render button color based on buttonClicked state
                           >
-                            <AddLocationAltRoundedIcon fontSize="3rem" />
+                            <AddLocationAltRoundedIcon
+                              fontSize="3rem"
+                              sx={{
+                                color: "#6b460c  ",
+                              }}
+                            />
                           </IconButton>
                         </Box>
 
@@ -234,4 +307,4 @@ export const Parks = (props) => {
       </Box>
     </Box>
   );
-};
+}
