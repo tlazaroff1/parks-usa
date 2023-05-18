@@ -141,13 +141,13 @@ export default function ActivitiesIcons({ activities }) {
           } else if (activity == "Surfing") {
             return (
               <Tooltip title={activity}>
-                <SurfingRoundedIcon className="icon" />{" "}
+                <SurfingRoundedIcon className="icon" />
               </Tooltip>
             );
           } else if (activity == "Skiing") {
             return (
               <Tooltip title={activity}>
-                <DownhillSkiingRoundedIcon className="icon" />{" "}
+                <DownhillSkiingRoundedIcon className="icon" />
               </Tooltip>
             );
           } else if (activity == "Living History") {
