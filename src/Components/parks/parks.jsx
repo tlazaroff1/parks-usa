@@ -27,7 +27,7 @@ import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
 import { ImageCarousel } from "../carousel/carousel";
 
-export function Parks() {
+export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
   const ImageCarouselRoot = styled("div")(({ theme }) => ({
     width: "100%",
@@ -191,6 +191,7 @@ export function Parks() {
           getOptionLabel={(option) => option.label}
           value={stateCode}
           onChange={handleChange}
+          onSelect={handleSearch}
           renderInput={(params) => (
             <TextField
               sx={{
@@ -307,4 +308,4 @@ export function Parks() {
       </Box>
     </Box>
   );
-}
+};

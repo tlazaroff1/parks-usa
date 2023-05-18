@@ -1,6 +1,43 @@
 .displayInfo {
-  width: 90%;
+  width: 85%;
   margin: auto auto auto auto;
   padding-bottom: 20px;
   font-size: 12.75pt;
+}
+.locButton {
+  position: fixed;
+  bottom: 10pt;
+  right: 55pt;
+  z-index: 2;
+}
+.accordian {
+  width: 85%;
+  margin: auto auto auto auto;
+}
+.bottomAccordian {
+  border-bottom-left-radius: 10pt;
+  border-bottom-right-radius: 10pt;
+}
+.topAccordian {
+  border-top-left-radius: 10pt;
+  border-top-right-radius: 10pt;
+}
+
+.InfoTitle {
+  font-family: "Economica", sans-serif !important;
+  font-size: 1.7rem !important;
+  margin: auto auto auto auto;
+  text-align: center;
+  margin-top: 5px;
+}
+.website {
+  margin: auto auto auto auto;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.text {
+  text-align: justify;
+  font-size: 1.09rem !important;
 }

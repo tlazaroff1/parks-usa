@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Map() {
   const { locations } = useContext(LocationContext);
+  const { locationState, locationDispatch } = useContext(LocationContext);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyByo_ZcTT1MrLsO6EeWflKqlV-PMvgp8Vo",
@@ -43,7 +44,7 @@ export function Map() {
     map.fitBounds(bounds);
   };
 
-  const { locationState, locationDispatch } = useContext(LocationContext);
+  console.log(locations);
   const markers = locationState.locations.map((location, index) => ({
     id: index,
     code: location.code,
@@ -94,7 +95,7 @@ export function Map() {
             <Divider className="divider"></Divider>
             <List>
               {markers.map(({ id, name }) => (
-                <Button onClick={() => handleActiveMarker(id)}>
+                <Button onClick={() => handleActiveMarker(id)} color="#6b460c">
                   <ListItem
                     sx={{
                       color: "black",
@@ -128,12 +129,14 @@ export function Map() {
                       <Card>
                         <CardContent sx={{ padding: "3px" }}>
                           <Typography sx={{ fontSize: 14 }}>{name}</Typography>
-                          <Typography
-                            sx={{ mb: 1.5, fontSize: 12 }}
-                            color="text.secondary"
-                          >
-                            {address}
-                          </Typography>
+                          {address && (
+                            <Typography
+                              sx={{ mb: 1.5, fontSize: 12 }}
+                              color="text.secondary"
+                            >
+                              {address}
+                            </Typography>
+                          )}
                         </CardContent>
                         <CardActions sx={{ padding: "3px" }}>
                           <Button size="small" onClick={() => goToParkPage(id)}>
