@@ -26,6 +26,7 @@ import glacier from "./../../glacier.jpg";
 import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
 import { ImageCarousel } from "../carousel/carousel";
+import { locationReducer } from "../state/locations/location-reducer";
 
 export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
@@ -115,29 +116,31 @@ export const Parks = (props) => {
   };
   const navigate = useNavigate();
   const [parkId, setParkId] = useState("");
+  const { locationState, locationDispatch } = useContext(LocationContext);
 
   function goToParkPage(parkCode) {
     navigate(`/park/${parkCode}`);
   }
   const [buttonClicked, setButtonClicked] = useState(false);
 
-  const { locationDispatch } = useContext(LocationContext);
   function addLocation(parkCode, parkName, longitude, latitude) {
     const newLocation = {
       code: parkCode,
       name: parkName,
+      // address: "", // Add the address property if necessary
       long: longitude,
       lat: latitude,
       isComplete: false,
     };
     locationDispatch({ type: LocationActions.ADD, ...newLocation });
+    console.log(newLocation, "new loc");
     console.log(parkCode);
     console.log(parkName);
     //console.log(parkAddress);
     console.log(longitude);
     console.log(latitude);
 
-    console.log("in function");
+    console.log(locationState);
   }
 
   const textTitleStyle = {
@@ -264,13 +267,16 @@ export const Parks = (props) => {
                               border: "1.5px solid #6b460c ",
                               background: "white",
                               color: "#6b460c ",
+
+                              ":hover": {
+                                bgcolor: "rgba(107, 70, 12, .05)",
+                              },
                             }}
                           >
                             View More
                           </Button>
 
                           <IconButton
-                            aria-label="delete"
                             size="large"
                             className="addLoc"
                             onClick={() =>
@@ -281,11 +287,6 @@ export const Parks = (props) => {
                                 park.latitude
                               )
                             }
-                            style={{
-                              backgroundColor: buttonClicked
-                                ? "white"
-                                : "white",
-                            }} // conditionally render button color based on buttonClicked state
                           >
                             <AddLocationAltRoundedIcon
                               fontSize="3rem"

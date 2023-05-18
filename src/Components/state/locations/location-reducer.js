@@ -12,7 +12,7 @@ export const locationReducer = (state, action) => {
       const newLocation = {
         code: action.code,
         name: action.name,
-        address: action.address,
+        //address: action.address,
         long: action.long,
         lat: action.lat,
         isComplete: false,

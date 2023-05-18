@@ -21,9 +21,6 @@
   border-radius: 3pt;
   margin-bottom: 10pt;
 }
-.addLoc:checked {
-  color: #1c3c23;
-}
 
 .img {
   border-bottom-left-radius: 3px;

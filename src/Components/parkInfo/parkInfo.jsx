@@ -13,6 +13,7 @@ import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/material/styles";
 import "./../../App.css";
 import "./parkInfo.css";
+import { ImageCarousel } from "../carousel/carousel";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
@@ -57,27 +58,8 @@ export function ParkInfo() {
   }
 
   const images = park.images.map((image) => image.url);
-  const ImageCarouselRoot = styled("div")(({ theme }) => ({
-    width: "100%",
-    height: "450px",
-    margin: "auto",
-    "& img": {
-      width: "100%",
-      height: "400px",
-      display: "block",
-      objectFit: "cover",
-    },
-  }));
 
-  /* const { locationDispatch } = useContext(LocationContext);
-  function addLocation(parkCode) {
-    locationDispatch({
-      type: LocationActions.ADD,
-      code: parkCode,
-    });
-    console.log(parkCode);
-    console.log("in function");
-  }*/ const Accordion = styled((props) => (
+  const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
   ))(({ theme }) => ({
     border: `1.5px solid #1c3c23`,
@@ -130,20 +112,17 @@ export function ParkInfo() {
         >
           {park.fullName}
         </Typography>
-        <ImageCarouselRoot>
-          <Carousel
-            showArrows
-            showThumbs={true}
-            showStatus={true}
-            infiniteLoop
-            autoPlay
-            interval={9000}
-          >
-            {images.map((src) => (
-              <img src={src} key={src} alt="Carousel item" />
-            ))}
-          </Carousel>
-        </ImageCarouselRoot>
+        <Box
+          sx={{
+            position: "relative",
+            top: 0,
+            left: 0,
+            width: "100%",
+            zIndex: "0",
+          }}
+        >
+          <ImageCarousel images={images} />
+        </Box>
         <Box>
           <Box className="locButton">
             <IconButton
@@ -243,9 +222,9 @@ export function ParkInfo() {
                 <Typography className="InfoTitle">Hours</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
+                <Typography sx={{ display: "flex" }}>
                   {park.operatingHours.map((hours, index) => (
-                    <Box key={index}>
+                    <Box key={index} sx={{ width: "33%", textAlign: "center" }}>
                       <Typography className="secondaryTitle">
                         {hours.name}
                       </Typography>
@@ -274,7 +253,7 @@ export function ParkInfo() {
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  <Box className="displayInfo">
+                  <Box>
                     <ListItem>
                       <ListItemIcon>
                         <LocalPhoneRoundedIcon />
@@ -284,7 +263,7 @@ export function ParkInfo() {
                       />
                     </ListItem>
                     {park.contacts.emailAddresses.map((emailAddress, index) => (
-                      <ListItem key={index}>
+                      <ListItem key={index} textAlign="center">
                         <ListItemIcon>
                           <EmailRoundedIcon />
                         </ListItemIcon>
@@ -296,7 +275,6 @@ export function ParkInfo() {
               </AccordionDetails>
             </Accordion>
             <Accordion
-              className="bottomAccordian"
               expanded={expanded === "panel3"}
               onChange={handleChange("panel3")}
             >
@@ -304,15 +282,62 @@ export function ParkInfo() {
                 aria-controls="panel3d-content"
                 id="panel3d-header"
               >
+                <Typography className="InfoTitle">Entrance Fees:</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  <Box>
+                    {park.entranceFees.map((fee, index) => (
+                      <Typography
+                        key={index}
+                        sx={{
+                          paddingRight: "16px",
+                          paddingLeft: "16px",
+                          paddingBottom: "5px",
+                        }}
+                      >
+                        {fee.title}:{" "}
+                        {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              className="bottomAccordian"
+              expanded={expanded === "panel4"}
+              onChange={handleChange("panel4")}
+            >
+              <AccordionSummary
+                aria-controls="panel4d-content"
+                id="panel4d-header"
+              >
                 <Typography className="InfoTitle">Address</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
                   {park.addresses.map((address, index) => (
-                    <Box key={index}>
-                      <Typography>
-                        {address.type} Address: {address.line1}, {address.city},{" "}
-                        {address.stateCode} {address.postalCode}
+                    <Box key={index} textAlign="center">
+                      <Typography
+                        display="flex"
+                        textAlign="center"
+                        sx={{
+                          paddingRight: "16px",
+                          paddingLeft: "16px",
+                          paddingBottom: "12px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            textDecoration: "underline",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          {address.type} Address:
+                        </Typography>
+                        {address.line1}, {address.city}, {address.stateCode}{" "}
+                        {address.postalCode}
                       </Typography>
                     </Box>
                   ))}

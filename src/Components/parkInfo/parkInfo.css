@@ -35,9 +35,14 @@
   text-align: center;
   padding-top: 20px;
   padding-bottom: 30px;
+  font-size: 1.2rem !important;
 }
 
 .text {
   text-align: justify;
   font-size: 1.09rem !important;
+}
+.secondaryTitle {
+  font-weight: bold !important;
+  text-decoration: underline;
 }

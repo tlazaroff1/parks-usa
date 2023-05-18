@@ -26,6 +26,7 @@ import SnowmobileRoundedIcon from "@mui/icons-material/SnowmobileRounded"; // sn
 import KitesurfingRoundedIcon from "@mui/icons-material/KitesurfingRounded"; //paddeling
 import { Box, List, ListItem } from "@mui/material";
 import { Margin } from "@mui/icons-material";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function ActivitiesIcons({ activities }) {
   const [icons, setActivityIcons] = useState([]);
@@ -36,53 +37,149 @@ export default function ActivitiesIcons({ activities }) {
       const uniqueIcons = activities
         .map((activity) => {
           if (activity.includes("Shopping")) {
-            return <StoreRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <StoreRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity.includes("Birdwatching")) {
-            return <FlutterDashRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <FlutterDashRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity.includes("Food")) {
-            return <LunchDiningRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <LunchDiningRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Hiking") {
-            return <HikingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <HikingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Camping") {
-            return <CabinRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <CabinRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Canoeing" || activity.includes("Kayak")) {
-            return <KayakingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <KayakingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Fishing") {
-            return <PhishingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <PhishingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Snowshoeing") {
-            return <SnowshoeingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <SnowshoeingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Guided Tours") {
-            return <TourRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <TourRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Boating") {
-            return <SailingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <SailingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Park Film") {
-            return <TheatersRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <TheatersRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Swimming") {
-            return <PoolRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <PoolRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "SCUBA Diving") {
-            return <ScubaDivingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <ScubaDivingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Museum Exhibits") {
-            return <MuseumRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <MuseumRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Biking") {
-            return <PedalBikeRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <PedalBikeRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity.includes("ATV")) {
-            return <DirectionsCarFilledRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <DirectionsCarFilledRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Picnicking") {
-            return <TableRestaurantRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <TableRestaurantRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Surfing") {
-            return <SurfingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <SurfingRoundedIcon className="icon" />{" "}
+              </Tooltip>
+            );
           } else if (activity == "Skiing") {
-            return <DownhillSkiingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <DownhillSkiingRoundedIcon className="icon" />{" "}
+              </Tooltip>
+            );
           } else if (activity == "Living History") {
-            return <HistoryEduRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <HistoryEduRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Theater") {
-            return <TheaterComedyRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <TheaterComedyRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Live Music") {
-            return <MusicNoteRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <MusicNoteRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Snowmobiling") {
-            return <SnowmobileRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <SnowmobileRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (activity == "Paddling") {
-            return <KitesurfingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={activity}>
+                <KitesurfingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else {
             return null;
           }

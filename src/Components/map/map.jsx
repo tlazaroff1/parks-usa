@@ -18,12 +18,12 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./../../App.css";
 import "./map.css";
-import { LocationContext } from "../state/locations/location-context";
+//import { LocationContext } from "../state/locations/location-context";
 import { LocationActions } from "../state/locations/location-reducer";
 import { useNavigate } from "react-router-dom";
+import { LocationContext } from "../state/locations/location-context";
 
 export function Map() {
-  const { locations } = useContext(LocationContext);
   const { locationState, locationDispatch } = useContext(LocationContext);
 
   const { isLoaded } = useLoadScript({
@@ -44,7 +44,7 @@ export function Map() {
     map.fitBounds(bounds);
   };
 
-  console.log(locations);
+  console.log(locationState.locations);
   const markers = locationState.locations.map((location, index) => ({
     id: index,
     code: location.code,

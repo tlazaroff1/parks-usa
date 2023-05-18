@@ -38,6 +38,7 @@ import CabinRoundedIcon from "@mui/icons-material/CabinRounded"; //cabin
 import LocalParkingRoundedIcon from "@mui/icons-material/LocalParkingRounded"; //parking
 import ElevatorRoundedIcon from "@mui/icons-material/ElevatorRounded"; //elevator
 import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded"; //atm
+import Tooltip from "@mui/material/Tooltip";
 
 import { Box, List, ListItem } from "@mui/material";
 
@@ -71,50 +72,136 @@ export default function AmenitiesIcons({ parkCode }) {
         .map((amenity) => {
           if (amenity == "Parking - Auto") {
             return (
-              <LocalParkingRoundedIcon className="icon" onHover={amenity} />
+              <Tooltip title={amenity}>
+                <LocalParkingRoundedIcon className="icon" onHover={amenity} />
+              </Tooltip>
             );
           } else if (amenity == "Restroom") {
-            return <WcRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <WcRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity == "Information") {
-            return <HelpCenterRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <HelpCenterRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Cellular")) {
-            return <SignalCellularAltRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <SignalCellularAltRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Benches")) {
-            return <ChairAltRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <ChairAltRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Map")) {
-            return <MapRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <MapRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity == "Water - Bottle-Filling Station") {
-            return <LocalDrinkRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <LocalDrinkRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("First Aid") || amenity.includes("AED")) {
-            return <MedicalServicesRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <MedicalServicesRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Food/Drink")) {
-            return <FastfoodRoundedIcon className="icon" />;
-          } else if (amenity.includes("Picnic")) {
-            return <TableRestaurantRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <FastfoodRoundedIcon className="icon" />
+              </Tooltip>
+            );
+          } else if (amenity == "Picnic Table") {
+            return (
+              <Tooltip title={amenity}>
+                <TableRestaurantRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Baby Changing Station")) {
-            return <BabyChangingStationRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <BabyChangingStationRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("WiFi")) {
-            return <WifiRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <WifiRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Telephone")) {
-            return <LocalPhoneRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <LocalPhoneRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Bus")) {
-            return <AirportShuttleRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <AirportShuttleRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Ferry")) {
-            return <DirectionsBoatRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <DirectionsBoatRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Public Transit")) {
-            return <DirectionsTransitFilledRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <DirectionsTransitFilledRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Trash")) {
-            return <DeleteRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <DeleteRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Recycling")) {
-            return <RecyclingRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <RecyclingRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity == "Wheelchair Accessible") {
-            return <AccessibleRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <AccessibleRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity.includes("Beach")) {
-            return <BeachAccessRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <BeachAccessRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity == "Elevator") {
-            return <ElevatorRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <ElevatorRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else if (amenity == "ATM/Cash Machine") {
-            return <LocalAtmRoundedIcon className="icon" />;
+            return (
+              <Tooltip title={amenity}>
+                <LocalAtmRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else {
             return null;
           }
