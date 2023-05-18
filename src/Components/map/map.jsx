@@ -44,7 +44,7 @@ export function Map() {
     map.fitBounds(bounds);
   };
 
-  console.log(locationState.locations);
+  console.log("in map", locationState.locations);
   const markers = locationState.locations.map((location, index) => ({
     id: index,
     code: location.code,
@@ -60,7 +60,7 @@ export function Map() {
   }
   const navigate = useNavigate();
 
-  function goToParkPage(id, code) {
+  function goToParkPage(id) {
     const parkCode = locationState.locations[id].code;
 
     navigate(`/park/${parkCode}`);
@@ -95,7 +95,15 @@ export function Map() {
             <Divider className="divider"></Divider>
             <List>
               {markers.map(({ id, name }) => (
-                <Button onClick={() => handleActiveMarker(id)} color="#6b460c">
+                <Button
+                  onClick={() => handleActiveMarker(id)}
+                  sx={{
+                    color: "#6b460c",
+                    "&:hover": {
+                      backgroundColor: "transparent", // Optional: To remove hover background color
+                    },
+                  }}
+                >
                   <ListItem
                     sx={{
                       color: "black",
@@ -105,6 +113,7 @@ export function Map() {
                     }}
                   >
                     {name}
+                    {console.log(name)}
                   </ListItem>
                 </Button>
               ))}
@@ -117,7 +126,7 @@ export function Map() {
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
           >
-            {markers.map(({ id, name, address, position }) => (
+            {markers.map(({ id, name, position }) => (
               <MarkerF
                 key={id}
                 position={position}
@@ -129,14 +138,14 @@ export function Map() {
                       <Card>
                         <CardContent sx={{ padding: "3px" }}>
                           <Typography sx={{ fontSize: 14 }}>{name}</Typography>
-                          {address && (
+                          {/*{address && (
                             <Typography
                               sx={{ mb: 1.5, fontSize: 12 }}
                               color="text.secondary"
                             >
                               {address}
                             </Typography>
-                          )}
+                         )}*/}
                         </CardContent>
                         <CardActions sx={{ padding: "3px" }}>
                           <Button size="small" onClick={() => goToParkPage(id)}>

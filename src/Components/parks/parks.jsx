@@ -124,24 +124,36 @@ export const Parks = (props) => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   function addLocation(parkCode, parkName, longitude, latitude) {
-    const newLocation = {
-      code: parkCode,
-      name: parkName,
-      // address: "", // Add the address property if necessary
-      long: longitude,
-      lat: latitude,
-      isComplete: false,
-    };
-    locationDispatch({ type: LocationActions.ADD, ...newLocation });
-    console.log(newLocation, "new loc");
+    const existingLocation = locationState.locations.find(
+      (location) => location.code === parkCode
+    );
+
+    if (!existingLocation) {
+      const newLocation = {
+        code: parkCode,
+        name: parkName,
+        long: longitude,
+        lat: latitude,
+        isComplete: false,
+      };
+      console.log(newLocation, "new loc");
+
+      locationDispatch({ type: LocationActions.ADD, location: newLocation });
+      locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
+    } else {
+      locationDispatch({
+        type: LocationActions.TOGGLE,
+        location: existingLocation,
+      });
+    }
+
     console.log(parkCode);
     console.log(parkName);
     //console.log(parkAddress);
     console.log(longitude);
     console.log(latitude);
-
-    console.log(locationState);
   }
+  console.log(locationState);
 
   const textTitleStyle = {
     color: "#6b460c",
@@ -284,9 +296,22 @@ export const Parks = (props) => {
                                 park.parkCode,
                                 park.fullName,
                                 park.longitude,
-                                park.latitude
+                                park.latitude,
+                                !park.isComplete // toggle the isComplete property
                               )
                             }
+                            sx={{
+                              marginLeft: "20px",
+                              border: "1.5px solid #6b460c ",
+                              bgcolor: park.isComplete
+                                ? "rgba(107, 70, 12, .02)"
+                                : "white",
+                              ":hover": {
+                                bgcolor: park.isComplete
+                                  ? "#6b460c"
+                                  : "rgba(107, 70, 12, .05)",
+                              },
+                            }}
                           >
                             <AddLocationAltRoundedIcon
                               fontSize="3rem"

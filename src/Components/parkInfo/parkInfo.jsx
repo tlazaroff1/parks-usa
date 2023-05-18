@@ -31,6 +31,7 @@ export function ParkInfo() {
   const [park, setPark] = useState("");
   const [activities, setActivities] = useState([]);
   const [expanded, setExpanded] = React.useState("panel1");
+  const { locationState, locationDispatch } = useContext(LocationContext);
 
   const { id } = useParams();
   console.log("id");
@@ -57,6 +58,30 @@ export function ParkInfo() {
     return <div>Loading...</div>;
   }
 
+  function addLocation(parkCode, parkName, longitude, latitude) {
+    const existingLocation = locationState.locations.find(
+      (location) => location.code === parkCode
+    );
+
+    if (!existingLocation) {
+      const newLocation = {
+        code: parkCode,
+        name: parkName,
+        long: longitude,
+        lat: latitude,
+        isComplete: false,
+      };
+      console.log(newLocation, "new loc");
+
+      locationDispatch({ type: LocationActions.ADD, location: newLocation });
+      locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
+    } else {
+      locationDispatch({
+        type: LocationActions.TOGGLE,
+        location: existingLocation,
+      });
+    }
+  }
   const images = park.images.map((image) => image.url);
 
   const Accordion = styled((props) => (
@@ -134,7 +159,15 @@ export function ParkInfo() {
                 border: "2px solid #6b460c",
                 radius: "50%",
               }}
-              //OnClick={() => addLocation(park.parkCode)}
+              onClick={() =>
+                addLocation(
+                  park.parkCode,
+                  park.fullName,
+                  park.longitude,
+                  park.latitude,
+                  !park.isComplete // toggle the isComplete property
+                )
+              }
             >
               <AddLocationAltRoundedIcon
                 sx={{ color: "#6b460c", fontSize: "2.5rem" }}
