@@ -1,30 +1,16 @@
 import { useState, useEffect } from "react";
 import "./amenities.css";
+import "./../parkInfo/parkInfo.css";
 import AccessibleRoundedIcon from "@mui/icons-material/AccessibleRounded"; //accessible
 import BeachAccessRoundedIcon from "@mui/icons-material/BeachAccessRounded";
-import DirectionsBikeRoundedIcon from "@mui/icons-material/DirectionsBikeRounded";
-import DownhillSkiingRoundedIcon from "@mui/icons-material/DownhillSkiingRounded";
-import GarageRoundedIcon from "@mui/icons-material/GarageRounded";
-import KayakingRoundedIcon from "@mui/icons-material/KayakingRounded"; //kayak
-import OutdoorGrillRoundedIcon from "@mui/icons-material/OutdoorGrillRounded";
-import PedalBikeRoundedIcon from "@mui/icons-material/PedalBikeRounded";
-import SkateboardingRoundedIcon from "@mui/icons-material/SkateboardingRounded";
-import SnowboardingRoundedIcon from "@mui/icons-material/SnowboardingRounded";
-import SnowshoeingRoundedIcon from "@mui/icons-material/SnowshoeingRounded";
-import SportsTennisRoundedIcon from "@mui/icons-material/SportsTennisRounded";
-import SurfingRoundedIcon from "@mui/icons-material/SurfingRounded";
-import AttractionsRoundedIcon from "@mui/icons-material/AttractionsRounded";
 import WcRoundedIcon from "@mui/icons-material/WcRounded"; //restroom
 import HelpCenterRoundedIcon from "@mui/icons-material/HelpCenterRounded"; //information
 import SignalCellularAltRoundedIcon from "@mui/icons-material/SignalCellularAltRounded"; //cellular signal
-import CardGiftcardRoundedIcon from "@mui/icons-material/CardGiftcardRounded"; //gifts/souviners
 import ChairAltRoundedIcon from "@mui/icons-material/ChairAltRounded"; //benches
 import MapRoundedIcon from "@mui/icons-material/MapRounded"; //information/map
 import LocalDrinkRoundedIcon from "@mui/icons-material/LocalDrinkRounded"; //Water - Bottle-Filling Station
 import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded"; //first aid / AED
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded"; // food/drink
-import HikingRoundedIcon from "@mui/icons-material/HikingRounded"; // hiking - trail
-import StadiumRoundedIcon from "@mui/icons-material/StadiumRounded"; // Amphitheater / Theater
 import TableRestaurantRoundedIcon from "@mui/icons-material/TableRestaurantRounded"; //picnic
 import BabyChangingStationRoundedIcon from "@mui/icons-material/BabyChangingStationRounded"; // Baby Changing Station
 import WifiRoundedIcon from "@mui/icons-material/WifiRounded"; //WiFi
@@ -34,13 +20,14 @@ import DirectionsBoatRoundedIcon from "@mui/icons-material/DirectionsBoatRounded
 import DirectionsTransitFilledRoundedIcon from "@mui/icons-material/DirectionsTransitFilledRounded"; // public transit
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded"; //Trash
 import RecyclingRoundedIcon from "@mui/icons-material/RecyclingRounded"; //Recycling
-import CabinRoundedIcon from "@mui/icons-material/CabinRounded"; //cabin
 import LocalParkingRoundedIcon from "@mui/icons-material/LocalParkingRounded"; //parking
 import ElevatorRoundedIcon from "@mui/icons-material/ElevatorRounded"; //elevator
 import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded"; //atm
+import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
+import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
 import Tooltip from "@mui/material/Tooltip";
 
-import { Box, List, ListItem } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 
 export default function AmenitiesIcons({ parkCode }) {
   const [amenities, setAmenities] = useState([]);
@@ -73,7 +60,7 @@ export default function AmenitiesIcons({ parkCode }) {
           if (amenity == "Parking - Auto") {
             return (
               <Tooltip title={amenity}>
-                <LocalParkingRoundedIcon className="icon" onHover={amenity} />
+                <LocalParkingRoundedIcon className="icon" />
               </Tooltip>
             );
           } else if (amenity == "Restroom") {
@@ -112,7 +99,13 @@ export default function AmenitiesIcons({ parkCode }) {
                 <LocalDrinkRoundedIcon className="icon" />
               </Tooltip>
             );
-          } else if (amenity.includes("First Aid") || amenity.includes("AED")) {
+          } else if (amenity.includes("AED")) {
+            return (
+              <Tooltip title={amenity}>
+                <MonitorHeartRoundedIcon className="icon" />
+              </Tooltip>
+            );
+          } else if (amenity.includes("First Aid/Medical Care Available")) {
             return (
               <Tooltip title={amenity}>
                 <MedicalServicesRoundedIcon className="icon" />
@@ -202,6 +195,12 @@ export default function AmenitiesIcons({ parkCode }) {
                 <LocalAtmRoundedIcon className="icon" />
               </Tooltip>
             );
+          } else if (amenity == "Food/Drink - Restaurant/Table Service") {
+            return (
+              <Tooltip title={amenity}>
+                <FoodBankRoundedIcon className="icon" />
+              </Tooltip>
+            );
           } else {
             return null;
           }
@@ -213,24 +212,28 @@ export default function AmenitiesIcons({ parkCode }) {
   }, [amenities]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box>
       {amenitiesIcons.length > 0 && (
-        <List
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            margin: "auto auto auto auto",
-          }}
-        >
-          {amenitiesIcons.map((icon, index) => (
-            <ListItem
-              key={index}
-              sx={{ paddingLeft: "6px", paddingRight: "6px", width: "80px" }}
-            >
-              {icon}
-            </ListItem>
-          ))}
+        <List sx={{ background: "rgba(28, 60, 35, .2)", borderRadius: "10pt" }}>
+          <Typography className="InfoTitle">Amenities</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+              margin: "auto auto auto auto",
+            }}
+          >
+            {amenitiesIcons.map((icon, index) => (
+              <ListItem
+                key={index}
+                sx={{ paddingLeft: "6px", paddingRight: "6px", width: "80px" }}
+              >
+                {icon}
+              </ListItem>
+            ))}
+          </Box>
         </List>
       )}
     </Box>

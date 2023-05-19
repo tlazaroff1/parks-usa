@@ -45,12 +45,31 @@ export function Map() {
   };
 
   console.log("in map", locationState.locations);
-  const markers = locationState.locations.map((location, index) => ({
-    id: index,
-    code: location.code,
-    name: location.name,
-    position: { lat: parseFloat(location.lat), lng: parseFloat(location.long) },
-  }));
+  const markers = locationState.locations.map((location, index) => {
+    const { line1, line2, city, stateCode, postalCode } =
+      location.address || {};
+
+    const formattedLine1 = line1 || "";
+    const formattedLine2 = line2 || "";
+    const formattedCity = city || "";
+    const formattedStateCode = stateCode || "";
+    const formattedPostalCode = postalCode || "";
+
+    const addressString = `${formattedLine1}${
+      formattedLine2 ? ", " + formattedLine2 : ""
+    }, ${formattedCity}, ${formattedStateCode} ${formattedPostalCode}`;
+
+    return {
+      id: index,
+      code: location.code,
+      name: location.name,
+      address: addressString, // Convert the address object to a string
+      position: {
+        lat: parseFloat(location.lat),
+        lng: parseFloat(location.long),
+      },
+    };
+  });
   function removePark(id) {
     const location = locationState.locations[id];
     locationDispatch({
@@ -71,6 +90,7 @@ export function Map() {
         <Box className="selectedParks" width="30%" height="500px">
           <Drawer
             sx={{
+              height: "500px",
               width: "100%",
               flexShrink: 1,
               "& .MuiDrawer-paper": {
@@ -82,7 +102,7 @@ export function Map() {
             anchor="left"
             position="relative"
           >
-            <Toolbar>
+            <Toolbar className="toolbar">
               <Typography
                 className="titles"
                 variant="h6"
@@ -93,40 +113,45 @@ export function Map() {
               </Typography>
             </Toolbar>
             <Divider className="divider"></Divider>
-            <List>
-              {markers.map(({ id, name }) => (
-                <Button
-                  onClick={() => handleActiveMarker(id)}
-                  sx={{
-                    color: "#6b460c",
-                    "&:hover": {
-                      backgroundColor: "transparent", // Optional: To remove hover background color
-                    },
-                  }}
-                >
-                  <ListItem
+            <Box>
+              <List sx={{ height: "415px", overflow: "auto" }}>
+                {markers.map(({ id, name }) => (
+                  <Button
+                    onClick={() => handleActiveMarker(id)}
                     sx={{
-                      color: "black",
-                      fontWeight: "400",
-                      textTransform: "inherit",
-                      fontSize: "1rem",
+                      color: "#6b460c",
+                      textTransform: "none",
+                      width: "100%",
+                      "&:hover": {
+                        backgroundColor: "transparent", // Optional: To remove hover background color
+                      },
                     }}
                   >
-                    {name}
-                    {console.log(name)}
-                  </ListItem>
-                </Button>
-              ))}
-            </List>
+                    <ListItem
+                      sx={{
+                        color: "black",
+                        fontWeight: "400",
+                        textTransform: "inherit",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      {name}
+                      {console.log(name)}
+                    </ListItem>
+                  </Button>
+                ))}
+              </List>
+            </Box>
           </Drawer>
         </Box>
+
         <Box width="70%">
           <GoogleMap
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
           >
-            {markers.map(({ id, name, position }) => (
+            {markers.map(({ id, name, address, position }) => (
               <MarkerF
                 key={id}
                 position={position}
@@ -138,20 +163,41 @@ export function Map() {
                       <Card>
                         <CardContent sx={{ padding: "3px" }}>
                           <Typography sx={{ fontSize: 14 }}>{name}</Typography>
-                          {/*{address && (
+                          {address && (
                             <Typography
                               sx={{ mb: 1.5, fontSize: 12 }}
                               color="text.secondary"
                             >
                               {address}
                             </Typography>
-                         )}*/}
+                          )}
                         </CardContent>
                         <CardActions sx={{ padding: "3px" }}>
-                          <Button size="small" onClick={() => goToParkPage(id)}>
+                          <Button
+                            size="small"
+                            sx={{
+                              background: "white",
+                              color: "#6b460c ",
+
+                              ":hover": {
+                                bgcolor: "rgba(107, 70, 12, .05)",
+                              },
+                            }}
+                            onClick={() => goToParkPage(id)}
+                          >
                             View More
                           </Button>
-                          <IconButton onClick={() => removePark(id)}>
+                          <IconButton
+                            sx={{
+                              background: "white",
+                              color: "#6b460c ",
+
+                              ":hover": {
+                                bgcolor: "rgba(107, 70, 12, .05)",
+                              },
+                            }}
+                            onClick={() => removePark(id)}
+                          >
                             <DeleteIcon />
                           </IconButton>
                         </CardActions>

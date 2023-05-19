@@ -4,6 +4,7 @@ export const LocationActions = {
   ADD: "ADD",
   TOGGLE: "TOGGLE",
   DELETE: "DELETE",
+  SET: "SET",
 };
 
 export const locationReducer = (state, action) => {
@@ -14,9 +15,13 @@ export const locationReducer = (state, action) => {
         name: action.location.name,
         long: action.location.long,
         lat: action.location.lat,
+        address: action.location.address,
         isComplete: false,
       };
-      return { locations: [...state.locations, newLocation] };
+      return {
+        locations: [...state.locations, newLocation],
+        searchState: state.searchState,
+      };
     }
     case LocationActions.TOGGLE: {
       const updatedLocations = state.locations.map((location) => {
@@ -27,6 +32,7 @@ export const locationReducer = (state, action) => {
       });
       return {
         locations: updatedLocations.filter((location) => location.isComplete),
+        searchState: state.searchState,
       };
     }
 
@@ -36,7 +42,11 @@ export const locationReducer = (state, action) => {
       );
       return {
         locations: newLocations,
+        searchState: state.searchState,
       };
+    }
+    case LocationActions.SET: {
+      return { searchState: action.state, locations: state.locations };
     }
   }
 };

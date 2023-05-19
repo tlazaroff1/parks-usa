@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
+import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
 import "./../../App.css";
 import "./parks.css";
 import { styled } from "@mui/material/styles";
@@ -26,7 +27,9 @@ import glacier from "./../../glacier.jpg";
 import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
 import { ImageCarousel } from "../carousel/carousel";
+import { useEffect } from "react";
 import { locationReducer } from "../state/locations/location-reducer";
+import { type } from "@testing-library/user-event/dist/type";
 
 export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
@@ -94,15 +97,22 @@ export const Parks = (props) => {
     { code: "WI", label: "Wisconsin" },
     { code: "WY", label: "Wyoming" },
   ];
-  const [stateCode, setStateCode] = useState(null); // default stateCode is "NY"
+  // const [stateCode, setStateCode] = useState(null); // default stateCode is "NY"
   const [parks, setParks] = useState([]);
-
+  const { locationState, locationDispatch } = useContext(LocationContext);
   const handleChange = (event, value) => {
-    setStateCode(value);
+    // setStateCode(value);
+    locationDispatch({ type: LocationActions.SET, state: value });
   };
 
-  const handleSearch = () => {
-    const url = `https://developer.nps.gov/api/v1/parks?stateCode=${stateCode?.code}&limit=100&api_key=BIzjqaC2rxnaliC9gGbP3inDJPUBjnU5oooydXuP`;
+  useEffect(() => {
+    if (locationState.searchState) {
+      callParkAPI();
+    }
+  }, [locationState]);
+
+  const callParkAPI = () => {
+    const url = `https://developer.nps.gov/api/v1/parks?stateCode=${locationState.searchState?.code}&limit=100&api_key=BIzjqaC2rxnaliC9gGbP3inDJPUBjnU5oooydXuP`;
 
     fetch(url, {
       method: "GET",
@@ -114,16 +124,142 @@ export const Parks = (props) => {
       .then((data) => setParks(data.data))
       .catch((error) => console.error(error));
   };
+  console.log(locationState.searchState);
   const navigate = useNavigate();
   const [parkId, setParkId] = useState("");
-  const { locationState, locationDispatch } = useContext(LocationContext);
 
   function goToParkPage(parkCode) {
     navigate(`/park/${parkCode}`);
   }
   const [buttonClicked, setButtonClicked] = useState(false);
 
-  function addLocation(parkCode, parkName, longitude, latitude) {
+  // function addLocation(
+  //   parkCode,
+  //   parkName,
+  //   longitude,
+  //   latitude,
+  //   line1,
+  //   line2,
+  //   city,
+  //   stateCode,
+  //   postalCode
+  // ) {
+  //   const existingLocation = locationState.locations.find(
+  //     (location) => location.code === parkCode
+  //   );
+
+  //   if (!existingLocation) {
+  //     const newLocation = {
+  //       code: parkCode,
+  //       name: parkName,
+  //       long: longitude,
+  //       lat: latitude,
+  //       address: {
+  //         line1,
+  //         line2,
+  //         city,
+  //         stateCode,
+  //         postalCode,
+  //       },
+
+  //       isComplete: false,
+  //     };
+  //     console.log(newLocation, "new loc");
+
+  //     locationDispatch({ type: LocationActions.ADD, location: newLocation });
+  //     locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
+  //   } else {
+  //     locationDispatch({
+  //       type: LocationActions.TOGGLE,
+  //       location: existingLocation,
+  //     });
+  //   }
+
+  //   console.log(parkCode);
+  //   console.log(parkName);
+  //   //console.log(parkAddress);
+  //   console.log(longitude);
+  //   console.log(latitude);
+  // }
+
+  function CustomIconButton({ park }) {
+    const [parkState, setParkState] = useState(park);
+
+    const handleButtonClick = () => {
+      const updatedPark = {
+        ...parkState,
+        isComplete: !parkState.isComplete,
+      };
+      setParkState(updatedPark);
+      addLocation(
+        updatedPark.parkCode,
+        updatedPark.fullName,
+        updatedPark.longitude,
+        updatedPark.latitude,
+        updatedPark.addresses[0].line1,
+        updatedPark.addresses[0].line2,
+        updatedPark.addresses[0].city,
+        updatedPark.addresses[0].stateCode,
+        updatedPark.addresses[0].postalCode,
+        updatedPark.isComplete
+      );
+      console.log(updatedPark.isComplete, "updated");
+    };
+    console.log(parkState.isComplete);
+    const renderIcon = () => {
+      if (parkState.isComplete) {
+        return (
+          <WrongLocationRoundedIcon
+            fontSize="3rem"
+            sx={{
+              color: "#6b460c",
+            }}
+          />
+        );
+      } else {
+        return (
+          <AddLocationAltRoundedIcon
+            fontSize="3rem"
+            sx={{
+              color: "#6b460c",
+            }}
+          />
+        );
+      }
+    };
+
+    return (
+      <IconButton
+        size="large"
+        className="addLoc"
+        onClick={handleButtonClick}
+        sx={{
+          marginLeft: "20px",
+          border: "1.5px solid #6b460c",
+          bgcolor: parkState.isComplete ? "rgba(107, 70, 12, .02)" : "white",
+          ":hover": {
+            bgcolor: parkState.isComplete
+              ? "#6b460c"
+              : "rgba(107, 70, 12, .05)",
+          },
+        }}
+      >
+        {renderIcon()}
+      </IconButton>
+    );
+  }
+
+  function addLocation(
+    parkCode,
+    parkName,
+    longitude,
+    latitude,
+    line1,
+    line2,
+    city,
+    stateCode,
+    postalCode
+  ) {
     const existingLocation = locationState.locations.find(
       (location) => location.code === parkCode
     );
@@ -134,9 +270,15 @@ export const Parks = (props) => {
         name: parkName,
         long: longitude,
         lat: latitude,
+        address: {
+          line1,
+          line2,
+          city,
+          stateCode,
+          postalCode,
+        },
         isComplete: false,
       };
-      console.log(newLocation, "new loc");
 
       locationDispatch({ type: LocationActions.ADD, location: newLocation });
       locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
@@ -146,13 +288,8 @@ export const Parks = (props) => {
         location: existingLocation,
       });
     }
-
-    console.log(parkCode);
-    console.log(parkName);
-    //console.log(parkAddress);
-    console.log(longitude);
-    console.log(latitude);
   }
+
   console.log(locationState);
 
   const textTitleStyle = {
@@ -204,9 +341,10 @@ export const Parks = (props) => {
           options={us_states}
           sx={{ width: "60%" }}
           getOptionLabel={(option) => option.label}
-          value={stateCode}
+          value={locationState.searchState}
           onChange={handleChange}
-          onSelect={handleSearch}
+          onSelect={callParkAPI}
+          // defaultValue={locationState.searchState || stateCode}
           renderInput={(params) => (
             <TextField
               sx={{
@@ -219,6 +357,7 @@ export const Parks = (props) => {
               }}
               id="outlined-basic"
               className="searchTextField"
+              // defaultValue={locationState.searchState || stateCode}
               {...params}
               placeholder="Enter A State: "
               InputProps={{
@@ -228,7 +367,7 @@ export const Parks = (props) => {
                     position="start"
                     aria-label="delete"
                     size="large"
-                    onClick={handleSearch}
+                    onClick={callParkAPI}
                   >
                     <SearchRoundedIcon
                       fontSize="large"
@@ -242,10 +381,10 @@ export const Parks = (props) => {
           )}
         ></Autocomplete>
       </Box>
-      <Box className="background">
-        <Box className="searchResult" width="90%">
+      <Box className="background" sx={{ minHeight: "0" }}>
+        <Box className="searchResult" width="90%" sx={{ minHeight: "0" }}>
           <Box>
-            <Box className="parksList" width="75%">
+            <Box className="parksList" width="75%" sx={{ minHeight: "0" }}>
               <List>
                 {parks.map((park) => {
                   return (
@@ -255,6 +394,7 @@ export const Parks = (props) => {
                           width="30%"
                           overflow="hidden"
                           minWidth="20%"
+                          maxWidth="20%"
                           marginRight="8px"
                         >
                           <img
@@ -288,7 +428,7 @@ export const Parks = (props) => {
                             View More
                           </Button>
 
-                          <IconButton
+                          {/* <IconButton
                             size="large"
                             className="addLoc"
                             onClick={() =>
@@ -297,6 +437,11 @@ export const Parks = (props) => {
                                 park.fullName,
                                 park.longitude,
                                 park.latitude,
+                                park.addresses[0].line1,
+                                park.addresses[0].line2,
+                                park.addresses[0].city,
+                                park.addresses[0].stateCode,
+                                park.addresses[0].postalCode,
                                 !park.isComplete // toggle the isComplete property
                               )
                             }
@@ -313,13 +458,29 @@ export const Parks = (props) => {
                               },
                             }}
                           >
-                            <AddLocationAltRoundedIcon
+                            {/* <AddLocationAltRoundedIcon
                               fontSize="3rem"
                               sx={{
                                 color: "#6b460c  ",
                               }}
-                            />
-                          </IconButton>
+                            /> 
+                            {park.isComplete ? (
+                              <WrongLocationRoundedIcon
+                                fontSize="3rem"
+                                sx={{
+                                  color: "#6b460c",
+                                }}
+                              />
+                            ) : (
+                              <AddLocationAltRoundedIcon
+                                fontSize="3rem"
+                                sx={{
+                                  color: "#6b460c",
+                                }}
+                              />
+                            )}
+                          </IconButton> */}
+                          <CustomIconButton key={park.parkCode} park={park} />
                         </Box>
 
                         <Divider />

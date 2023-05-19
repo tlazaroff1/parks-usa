@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./../parkAmenities/amenities.css";
+import "./../parkInfo/parkInfo.css";
 import KayakingRoundedIcon from "@mui/icons-material/KayakingRounded"; //kayak
 import PedalBikeRoundedIcon from "@mui/icons-material/PedalBikeRounded";
 import SnowshoeingRoundedIcon from "@mui/icons-material/SnowshoeingRounded";
@@ -24,7 +25,7 @@ import TheaterComedyRoundedIcon from "@mui/icons-material/TheaterComedyRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded"; //Live music
 import SnowmobileRoundedIcon from "@mui/icons-material/SnowmobileRounded"; // snowmobiling
 import KitesurfingRoundedIcon from "@mui/icons-material/KitesurfingRounded"; //paddeling
-import { Box, List, ListItem } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import { Margin } from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -66,7 +67,10 @@ export default function ActivitiesIcons({ activities }) {
                 <CabinRoundedIcon className="icon" />
               </Tooltip>
             );
-          } else if (activity == "Canoeing" || activity.includes("Kayak")) {
+          } else if (
+            activity == "Canoeing" ||
+            (activity.includes("Kayak") && activity != "Canoe or Kayak Camping")
+          ) {
             return (
               <Tooltip title={activity}>
                 <KayakingRoundedIcon className="icon" />
@@ -191,28 +195,38 @@ export default function ActivitiesIcons({ activities }) {
   }, [activities]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box margin="auto auto auto auto">
       {icons.length > 0 && (
         <List
           sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
+            background: "rgba(28, 60, 35, .2)",
+            borderRadius: "10pt",
             margin: "auto auto auto auto",
           }}
         >
-          {icons.map((icon, index) => (
-            <ListItem
-              key={index}
-              sx={{
-                paddingLeft: "6px",
-                paddingRight: "6px",
-                width: "80px",
-              }}
-            >
-              {icon}
-            </ListItem>
-          ))}
+          <Typography className="InfoTitle">Activities</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+              margin: "auto auto auto auto",
+            }}
+          >
+            {icons.map((icon, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  paddingLeft: "6px",
+                  paddingRight: "6px",
+                  width: "80px",
+                }}
+              >
+                {icon}
+              </ListItem>
+            ))}
+          </Box>
         </List>
       )}
     </Box>

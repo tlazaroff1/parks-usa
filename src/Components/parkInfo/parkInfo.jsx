@@ -178,70 +178,12 @@ export function ParkInfo() {
             <Typography className="text">{park.description}</Typography>
           </Box>
           <Box className="displayInfo">
-            <Typography className="InfoTitle">Amenities</Typography>
             <AmenitiesIcons parkCode={park.parkCode} />
           </Box>
           <Box className="displayInfo">
-            <Typography className="InfoTitle">Activities</Typography>
             <ActivitiesIcons activities={activitiesList} />
           </Box>
-          {/*<Box className="displayInfo">
-            <Typography className="InfoTitle">Hours:</Typography>
-            {park.operatingHours.map((hours, index) => (
-              <Box key={index}>
-                <Typography className="secondaryTitle">{hours.name}</Typography>
-                {Object.keys(hours.standardHours).map((day, index) => (
-                  <Typography key={index}>
-                    {day.charAt(0).toUpperCase() + day.slice(1)}:{" "}
-                    {hours.standardHours[day] === "All Day"
-                      ? "24 hours"
-                      : hours.standardHours[day]}
-                  </Typography>
-                ))}
-              </Box>
-            ))}
-          </Box>
-          <Divider />*/}
 
-          {/* <Box className="displayInfo">
-            <ListItem>
-              <ListItemIcon>
-                <LocalPhoneRoundedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={park.contacts.phoneNumbers[0].phoneNumber}
-              />
-            </ListItem>
-            {park.contacts.emailAddresses.map((emailAddress, index) => (
-              <ListItem key={index}>
-                <ListItemIcon>
-                  <EmailRoundedIcon />
-                </ListItemIcon>
-                <ListItemText primary={emailAddress.emailAddress} />
-              </ListItem>
-            ))}
-          </Box>
-          <Divider /> 
-          <Box className="displayInfo">
-            <Typography className="InfoTitle">Entrance Fees:</Typography>
-            {park.entranceFees.map((fee, index) => (
-              <Typography key={index}>
-                {fee.title}: {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
-              </Typography>
-            ))}
-          </Box>
-          <Divider />
-          <Box className="displayInfo">
-            <Typography className="InfoTitle">Addresses:</Typography>
-            {park.addresses.map((address, index) => (
-              <Box key={index}>
-                <Typography>
-                  {address.type} Address: {address.line1}, {address.city},{" "}
-                  {address.stateCode} {address.postalCode}
-                </Typography>
-              </Box>
-            ))}
-            </Box>*/}
           <div className="accordian">
             <Accordion
               className="topAccordian"
@@ -320,19 +262,31 @@ export function ParkInfo() {
               <AccordionDetails>
                 <Typography>
                   <Box>
-                    {park.entranceFees.map((fee, index) => (
+                    {park.entranceFees && park.entranceFees.length > 0 ? (
+                      park.entranceFees.map((fee, index) => (
+                        <Typography
+                          key={index}
+                          sx={{
+                            paddingRight: "16px",
+                            paddingLeft: "16px",
+                            paddingBottom: "12px",
+                          }}
+                        >
+                          {fee.title}:{" "}
+                          {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
+                        </Typography>
+                      ))
+                    ) : (
                       <Typography
-                        key={index}
                         sx={{
                           paddingRight: "16px",
                           paddingLeft: "16px",
-                          paddingBottom: "5px",
+                          paddingBottom: "12px",
                         }}
                       >
-                        {fee.title}:{" "}
-                        {fee.cost === "0.00" ? "No Fee" : `$${fee.cost}`}
+                        Free
                       </Typography>
-                    ))}
+                    )}
                   </Box>
                 </Typography>
               </AccordionDetails>
