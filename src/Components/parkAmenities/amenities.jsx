@@ -35,7 +35,6 @@ import { Box, List, ListItem, Typography } from "@mui/material";
 export default function AmenitiesIcons({ parkCode }) {
   const [amenities, setAmenities] = useState([]);
   const [amenitiesIcons, setAmenitiesIcons] = useState([]);
-  const defaultIcon = { amenities };
 
   useEffect(() => {
     fetch(

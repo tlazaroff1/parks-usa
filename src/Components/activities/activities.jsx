@@ -26,7 +26,6 @@ import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded"; //Live 
 import SnowmobileRoundedIcon from "@mui/icons-material/SnowmobileRounded"; // snowmobiling
 import KitesurfingRoundedIcon from "@mui/icons-material/KitesurfingRounded"; //paddeling
 import { Box, List, ListItem, Typography } from "@mui/material";
-import { Margin } from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function ActivitiesIcons({ activities }) {
@@ -188,7 +187,7 @@ export default function ActivitiesIcons({ activities }) {
             return null;
           }
         })
-        .filter((icon) => icon !== null); // Filter out the null values
+        .filter((icon) => icon !== null);
 
       setActivityIcons(uniqueIcons);
     }

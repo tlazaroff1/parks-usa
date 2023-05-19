@@ -17,7 +17,6 @@ import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
 import "./../../App.css";
 import "./parks.css";
 import { styled } from "@mui/material/styles";
-import Carousel from "react-material-ui-carousel";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LocationActions } from "../state/locations/location-reducer";
@@ -28,22 +27,10 @@ import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
 import { ImageCarousel } from "../carousel/carousel";
 import { useEffect } from "react";
-import { locationReducer } from "../state/locations/location-reducer";
-import { type } from "@testing-library/user-event/dist/type";
+import Tooltip from "@mui/material/Tooltip";
 
 export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
-  const ImageCarouselRoot = styled("div")(({ theme }) => ({
-    width: "100%",
-    height: "500px",
-    margin: "auto",
-    "& img": {
-      width: "100%",
-      height: "450px",
-      display: "block",
-      objectFit: "cover",
-    },
-  }));
 
   const us_states = [
     { code: "AL", label: "Alabama" },
@@ -97,11 +84,9 @@ export const Parks = (props) => {
     { code: "WI", label: "Wisconsin" },
     { code: "WY", label: "Wyoming" },
   ];
-  // const [stateCode, setStateCode] = useState(null); // default stateCode is "NY"
   const [parks, setParks] = useState([]);
   const { locationState, locationDispatch } = useContext(LocationContext);
   const handleChange = (event, value) => {
-    // setStateCode(value);
     locationDispatch({ type: LocationActions.SET, state: value });
   };
 
@@ -230,7 +215,6 @@ export const Parks = (props) => {
           value={locationState.searchState}
           onChange={handleChange}
           onSelect={callParkAPI}
-          // defaultValue={locationState.searchState || stateCode}
           renderInput={(params) => (
             <TextField
               sx={{
@@ -243,7 +227,6 @@ export const Parks = (props) => {
               }}
               id="outlined-basic"
               className="searchTextField"
-              // defaultValue={locationState.searchState || stateCode}
               {...params}
               placeholder="Enter A State: "
               InputProps={{
@@ -343,19 +326,23 @@ export const Parks = (props) => {
                             {locationState.locations.find(
                               (location) => location.code === park.parkCode
                             )?.isComplete ? (
-                              <WrongLocationRoundedIcon
-                                fontSize="3rem"
-                                sx={{
-                                  color: "#6b460c",
-                                }}
-                              />
+                              <Tooltip title="Remove From Map">
+                                <WrongLocationRoundedIcon
+                                  fontSize="3rem"
+                                  sx={{
+                                    color: "#6b460c",
+                                  }}
+                                />
+                              </Tooltip>
                             ) : (
-                              <AddLocationAltRoundedIcon
-                                fontSize="3rem"
-                                sx={{
-                                  color: "#6b460c",
-                                }}
-                              />
+                              <Tooltip title="Add To Map">
+                                <AddLocationAltRoundedIcon
+                                  fontSize="3rem"
+                                  sx={{
+                                    color: "#6b460c",
+                                  }}
+                                />
+                              </Tooltip>
                             )}
                           </IconButton>
                         </Box>

@@ -18,7 +18,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./../../App.css";
 import "./map.css";
-//import { LocationContext } from "../state/locations/location-context";
 import { LocationActions } from "../state/locations/location-reducer";
 import { useNavigate } from "react-router-dom";
 import { LocationContext } from "../state/locations/location-context";
@@ -63,7 +62,7 @@ export function Map() {
       id: index,
       code: location.code,
       name: location.name,
-      address: addressString, // Convert the address object to a string
+      address: addressString,
       position: {
         lat: parseFloat(location.lat),
         lng: parseFloat(location.long),
@@ -123,7 +122,7 @@ export function Map() {
                       textTransform: "none",
                       width: "100%",
                       "&:hover": {
-                        backgroundColor: "transparent", // Optional: To remove hover background color
+                        backgroundColor: "transparent",
                       },
                     }}
                   >
