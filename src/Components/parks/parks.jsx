@@ -131,123 +131,6 @@ export const Parks = (props) => {
   function goToParkPage(parkCode) {
     navigate(`/park/${parkCode}`);
   }
-  const [buttonClicked, setButtonClicked] = useState(false);
-
-  // function addLocation(
-  //   parkCode,
-  //   parkName,
-  //   longitude,
-  //   latitude,
-  //   line1,
-  //   line2,
-  //   city,
-  //   stateCode,
-  //   postalCode
-  // ) {
-  //   const existingLocation = locationState.locations.find(
-  //     (location) => location.code === parkCode
-  //   );
-
-  //   if (!existingLocation) {
-  //     const newLocation = {
-  //       code: parkCode,
-  //       name: parkName,
-  //       long: longitude,
-  //       lat: latitude,
-  //       address: {
-  //         line1,
-  //         line2,
-  //         city,
-  //         stateCode,
-  //         postalCode,
-  //       },
-
-  //       isComplete: false,
-  //     };
-  //     console.log(newLocation, "new loc");
-
-  //     locationDispatch({ type: LocationActions.ADD, location: newLocation });
-  //     locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
-  //   } else {
-  //     locationDispatch({
-  //       type: LocationActions.TOGGLE,
-  //       location: existingLocation,
-  //     });
-  //   }
-
-  //   console.log(parkCode);
-  //   console.log(parkName);
-  //   //console.log(parkAddress);
-  //   console.log(longitude);
-  //   console.log(latitude);
-  // }
-
-  function CustomIconButton({ park }) {
-    const [parkState, setParkState] = useState(park);
-
-    const handleButtonClick = () => {
-      const updatedPark = {
-        ...parkState,
-        isComplete: !parkState.isComplete,
-      };
-      setParkState(updatedPark);
-      addLocation(
-        updatedPark.parkCode,
-        updatedPark.fullName,
-        updatedPark.longitude,
-        updatedPark.latitude,
-        updatedPark.addresses[0].line1,
-        updatedPark.addresses[0].line2,
-        updatedPark.addresses[0].city,
-        updatedPark.addresses[0].stateCode,
-        updatedPark.addresses[0].postalCode,
-        updatedPark.isComplete
-      );
-      console.log(updatedPark.isComplete, "updated");
-    };
-    console.log(parkState.isComplete);
-    const renderIcon = () => {
-      if (parkState.isComplete) {
-        return (
-          <WrongLocationRoundedIcon
-            fontSize="3rem"
-            sx={{
-              color: "#6b460c",
-            }}
-          />
-        );
-      } else {
-        return (
-          <AddLocationAltRoundedIcon
-            fontSize="3rem"
-            sx={{
-              color: "#6b460c",
-            }}
-          />
-        );
-      }
-    };
-
-    return (
-      <IconButton
-        size="large"
-        className="addLoc"
-        onClick={handleButtonClick}
-        sx={{
-          marginLeft: "20px",
-          border: "1.5px solid #6b460c",
-          bgcolor: parkState.isComplete ? "rgba(107, 70, 12, .02)" : "white",
-          ":hover": {
-            bgcolor: parkState.isComplete
-              ? "#6b460c"
-              : "rgba(107, 70, 12, .05)",
-          },
-        }}
-      >
-        {renderIcon()}
-      </IconButton>
-    );
-  }
 
   function addLocation(
     parkCode,
@@ -283,9 +166,12 @@ export const Parks = (props) => {
       locationDispatch({ type: LocationActions.ADD, location: newLocation });
       locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
     } else {
+      const updatedLocation = { ...existingLocation };
+      updatedLocation.isComplete = !updatedLocation.isComplete; // toggle the isComplete property
+
       locationDispatch({
         type: LocationActions.TOGGLE,
-        location: existingLocation,
+        location: updatedLocation,
       });
     }
   }
@@ -421,14 +307,14 @@ export const Parks = (props) => {
                               color: "#6b460c ",
 
                               ":hover": {
-                                bgcolor: "rgba(107, 70, 12, .05)",
+                                bgcolor: "rgba(107, 70, 12, .2)",
                               },
                             }}
                           >
                             View More
                           </Button>
 
-                          {/* <IconButton
+                          <IconButton
                             size="large"
                             className="addLoc"
                             onClick={() =>
@@ -441,30 +327,22 @@ export const Parks = (props) => {
                                 park.addresses[0].line2,
                                 park.addresses[0].city,
                                 park.addresses[0].stateCode,
-                                park.addresses[0].postalCode,
-                                !park.isComplete // toggle the isComplete property
+                                park.addresses[0].postalCode
                               )
                             }
                             sx={{
                               marginLeft: "20px",
                               border: "1.5px solid #6b460c ",
-                              bgcolor: park.isComplete
-                                ? "rgba(107, 70, 12, .02)"
-                                : "white",
+                              bgcolor: "white",
+
                               ":hover": {
-                                bgcolor: park.isComplete
-                                  ? "#6b460c"
-                                  : "rgba(107, 70, 12, .05)",
+                                bgcolor: "rgba(107, 70, 12, .2)",
                               },
                             }}
                           >
-                            {/* <AddLocationAltRoundedIcon
-                              fontSize="3rem"
-                              sx={{
-                                color: "#6b460c  ",
-                              }}
-                            /> 
-                            {park.isComplete ? (
+                            {locationState.locations.find(
+                              (location) => location.code === park.parkCode
+                            )?.isComplete ? (
                               <WrongLocationRoundedIcon
                                 fontSize="3rem"
                                 sx={{
@@ -479,8 +357,7 @@ export const Parks = (props) => {
                                 }}
                               />
                             )}
-                          </IconButton> */}
-                          <CustomIconButton key={park.parkCode} park={park} />
+                          </IconButton>
                         </Box>
 
                         <Divider />

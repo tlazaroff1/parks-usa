@@ -25,6 +25,9 @@ import ElevatorRoundedIcon from "@mui/icons-material/ElevatorRounded"; //elevato
 import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded"; //atm
 import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
 import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
+import DirectionsBusFilledRoundedIcon from "@mui/icons-material/DirectionsBusFilledRounded";
+import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
+import OutdoorGrillRoundedIcon from "@mui/icons-material/OutdoorGrillRounded";
 import Tooltip from "@mui/material/Tooltip";
 
 import { Box, List, ListItem, Typography } from "@mui/material";
@@ -111,7 +114,7 @@ export default function AmenitiesIcons({ parkCode }) {
                 <MedicalServicesRoundedIcon className="icon" />
               </Tooltip>
             );
-          } else if (amenity.includes("Food/Drink")) {
+          } else if (amenity == "Food/Drink - Snacks") {
             return (
               <Tooltip title={amenity}>
                 <FastfoodRoundedIcon className="icon" />
@@ -141,10 +144,16 @@ export default function AmenitiesIcons({ parkCode }) {
                 <LocalPhoneRoundedIcon className="icon" />
               </Tooltip>
             );
-          } else if (amenity.includes("Bus")) {
+          } else if (amenity == "Parking - Bus/RV") {
             return (
               <Tooltip title={amenity}>
                 <AirportShuttleRoundedIcon className="icon" />
+              </Tooltip>
+            );
+          } else if (amenity == "Bus/Shuttle Stop") {
+            return (
+              <Tooltip title={amenity}>
+                <DirectionsBusFilledRoundedIcon className="icon" />
               </Tooltip>
             );
           } else if (amenity.includes("Ferry")) {
@@ -199,6 +208,18 @@ export default function AmenitiesIcons({ parkCode }) {
             return (
               <Tooltip title={amenity}>
                 <FoodBankRoundedIcon className="icon" />
+              </Tooltip>
+            );
+          } else if (amenity == "Food/Drink - Vending Machine/Self Service") {
+            return (
+              <Tooltip title={amenity}>
+                <KitchenRoundedIcon className="icon" />
+              </Tooltip>
+            );
+          } else if (amenity == "Grill") {
+            return (
+              <Tooltip title={amenity}>
+                <OutdoorGrillRoundedIcon className="icon" />
               </Tooltip>
             );
           } else {

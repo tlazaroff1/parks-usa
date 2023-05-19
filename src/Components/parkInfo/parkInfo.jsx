@@ -1,7 +1,6 @@
 import { useParams } from "react-router";
 import {
   Box,
-  Divider,
   Typography,
   ListItem,
   ListItemIcon,
@@ -9,7 +8,6 @@ import {
   IconButton,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/material/styles";
 import "./../../App.css";
 import "./parkInfo.css";
@@ -26,6 +24,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import AmenitiesIcons from "../parkAmenities/amenities";
 import ActivitiesIcons from "../activities/activities";
+import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
 
 export function ParkInfo() {
   const [park, setPark] = useState("");
@@ -169,9 +168,23 @@ export function ParkInfo() {
                 )
               }
             >
-              <AddLocationAltRoundedIcon
-                sx={{ color: "#6b460c", fontSize: "2.5rem" }}
-              />
+              {locationState.locations.find(
+                (location) => location.code === park.parkCode
+              )?.isComplete ? (
+                <WrongLocationRoundedIcon
+                  fontSize="3rem"
+                  sx={{
+                    color: "#6b460c",
+                  }}
+                />
+              ) : (
+                <AddLocationAltRoundedIcon
+                  fontSize="3rem"
+                  sx={{
+                    color: "#6b460c",
+                  }}
+                />
+              )}
             </IconButton>
           </Box>
           <Box className="displayInfo">
