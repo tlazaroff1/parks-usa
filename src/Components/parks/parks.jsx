@@ -95,7 +95,7 @@ export const Parks = (props) => {
       setLoading(true);
       callParkAPI();
     }
-  }, [locationState]);
+  }, [locationState.searchState]);
 
   const callParkAPI = () => {
     const url = `https://developer.nps.gov/api/v1/parks?stateCode=${locationState.searchState?.code}&limit=100&api_key=BIzjqaC2rxnaliC9gGbP3inDJPUBjnU5oooydXuP`;
@@ -113,7 +113,7 @@ export const Parks = (props) => {
       })
       .catch((error) => {
         console.error(error);
-        setLoading(false);
+        setLoading(true);
       });
   };
 
