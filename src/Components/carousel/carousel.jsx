@@ -5,11 +5,11 @@ import "./carousel.css";
 
 const ImageCarouselRoot = styled("div")(({ theme }) => ({
   width: "100%",
-  height: "500px",
+  height: "470px",
   margin: "auto",
   "& img": {
     width: "100%",
-    height: "450px",
+    height: "420px",
     display: "block",
     objectFit: "cover",
   },
