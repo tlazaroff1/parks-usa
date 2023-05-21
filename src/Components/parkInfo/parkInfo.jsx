@@ -176,6 +176,9 @@ export function ParkInfo() {
                 backgroundColor: "white",
                 border: "2px solid #6b460c",
                 radius: "50%",
+                ":hover": {
+                  bgcolor: "rgba(107, 70, 12, .2)",
+                },
               }}
               onClick={() =>
                 addLocation(
@@ -194,23 +197,19 @@ export function ParkInfo() {
               {locationState.locations.find(
                 (location) => location.code === park.parkCode
               )?.isComplete ? (
-                <Tooltip title="Remove From Map">
-                  <WrongLocationRoundedIcon
-                    fontSize="3rem"
-                    sx={{
-                      color: "#6b460c",
-                    }}
-                  />
-                </Tooltip>
+                <WrongLocationRoundedIcon
+                  fontSize="3rem"
+                  sx={{
+                    color: "#6b460c",
+                  }}
+                />
               ) : (
-                <Tooltip title="Add To Map">
-                  <AddLocationAltRoundedIcon
-                    fontSize="3rem"
-                    sx={{
-                      color: "#6b460c",
-                    }}
-                  />
-                </Tooltip>
+                <AddLocationAltRoundedIcon
+                  fontSize="3rem"
+                  sx={{
+                    color: "#6b460c",
+                  }}
+                />
               )}
             </IconButton>
           </Box>

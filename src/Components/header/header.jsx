@@ -8,7 +8,6 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import "./header.css";
 import logo2 from "./../../logo2.png";
-import logo from "./../../ParksUSA.png";
 import { useNavigate } from "react-router-dom";
 
 const pages = [
@@ -46,7 +45,12 @@ export function Header() {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <img src={logo2} alt="parksUSALogo" width={100} />
+            <img
+              src={logo2}
+              alt="parksUSALogo"
+              width={100}
+              onClick={() => handleCloseNavMenu({ name: "Parks", path: "/" })}
+            />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -100,7 +104,12 @@ export function Header() {
               flexGrow: 1,
             }}
           >
-            <img src={logo2} alt="recipeCornerLogo" width={200} />
+            <img
+              src={logo2}
+              alt="recipeCornerLogo"
+              width={180}
+              onClick={() => handleCloseNavMenu({ name: "Parks", path: "/" })}
+            />
           </Typography>
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

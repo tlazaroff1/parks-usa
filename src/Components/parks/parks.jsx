@@ -111,7 +111,6 @@ export const Parks = (props) => {
   };
   console.log(locationState.searchState);
   const navigate = useNavigate();
-  const [parkId, setParkId] = useState("");
 
   function goToParkPage(parkCode) {
     navigate(`/park/${parkCode}`);
@@ -327,23 +326,19 @@ export const Parks = (props) => {
                               {locationState.locations.find(
                                 (location) => location.code === park.parkCode
                               )?.isComplete ? (
-                                <Tooltip title="Remove From Map">
-                                  <WrongLocationRoundedIcon
-                                    fontSize="3rem"
-                                    sx={{
-                                      color: "#6b460c",
-                                    }}
-                                  />
-                                </Tooltip>
+                                <WrongLocationRoundedIcon
+                                  fontSize="3rem"
+                                  sx={{
+                                    color: "#6b460c",
+                                  }}
+                                />
                               ) : (
-                                <Tooltip title="Add To Map">
-                                  <AddLocationAltRoundedIcon
-                                    fontSize="3rem"
-                                    sx={{
-                                      color: "#6b460c",
-                                    }}
-                                  />
-                                </Tooltip>
+                                <AddLocationAltRoundedIcon
+                                  fontSize="3rem"
+                                  sx={{
+                                    color: "#6b460c",
+                                  }}
+                                />
                               )}
                             </IconButton>
                           </Box>
