@@ -250,113 +250,115 @@ export const Parks = (props) => {
           )}
         ></Autocomplete>
       </Box>
-      <Box className="background" sx={{ minHeight: "0" }}>
-        <Box className="searchResult" width="90%" sx={{ minHeight: "0" }}>
-          <Box>
-            <Box className="parksList" width="75%" sx={{ minHeight: "0" }}>
-              <List>
-                {parks.map((park) => {
-                  return (
-                    <Box className="listItem" sx={{ height: "200px" }}>
-                      <ListItem key={park.id} sx={{ padding: "0 0 0 0" }}>
-                        <Box
-                          width="30%"
-                          overflow="hidden"
-                          minWidth="20%"
-                          maxWidth="20%"
-                          marginRight="8px"
-                        >
-                          <img
-                            height="200px"
-                            alt={park.fullName}
-                            src={park.images[0]?.url}
-                            width="100%"
-                            className="img"
-                          />
-                        </Box>
-                        <Box sx={{ padding: "5px 5px 5px 5px" }}>
-                          <ListItemText
-                            className="parkDesc"
-                            primaryTypographyProps={{ style: textTitleStyle }}
-                            primary={park.fullName}
-                            secondary={park.description}
-                          />
-                          <Button
-                            variant="contained"
-                            onClick={() => goToParkPage(park.parkCode)}
-                            sx={{
-                              border: "1.5px solid #6b460c ",
-                              background: "white",
-                              color: "#6b460c ",
-
-                              ":hover": {
-                                bgcolor: "rgba(107, 70, 12, .2)",
-                              },
-                            }}
+      {locationState.searchState && (
+        <Box className="background" sx={{ minHeight: "0" }}>
+          <Box className="searchResult" width="90%" sx={{ minHeight: "0" }}>
+            <Box>
+              <Box className="parksList" width="75%" sx={{ minHeight: "0" }}>
+                <List>
+                  {parks.map((park) => {
+                    return (
+                      <Box className="listItem" sx={{ height: "200px" }}>
+                        <ListItem key={park.id} sx={{ padding: "0 0 0 0" }}>
+                          <Box
+                            width="30%"
+                            overflow="hidden"
+                            minWidth="20%"
+                            maxWidth="20%"
+                            marginRight="8px"
                           >
-                            View More
-                          </Button>
+                            <img
+                              height="200px"
+                              alt={park.fullName}
+                              src={park.images[0]?.url}
+                              width="100%"
+                              className="img"
+                            />
+                          </Box>
+                          <Box sx={{ padding: "5px 5px 5px 5px" }}>
+                            <ListItemText
+                              className="parkDesc"
+                              primaryTypographyProps={{ style: textTitleStyle }}
+                              primary={park.fullName}
+                              secondary={park.description}
+                            />
+                            <Button
+                              variant="contained"
+                              onClick={() => goToParkPage(park.parkCode)}
+                              sx={{
+                                border: "1.5px solid #6b460c ",
+                                background: "white",
+                                color: "#6b460c ",
 
-                          <IconButton
-                            size="large"
-                            className="addLoc"
-                            onClick={() =>
-                              addLocation(
-                                park.parkCode,
-                                park.fullName,
-                                park.longitude,
-                                park.latitude,
-                                park.addresses[0].line1,
-                                park.addresses[0].line2,
-                                park.addresses[0].city,
-                                park.addresses[0].stateCode,
-                                park.addresses[0].postalCode
-                              )
-                            }
-                            sx={{
-                              marginLeft: "20px",
-                              border: "1.5px solid #6b460c ",
-                              bgcolor: "white",
+                                ":hover": {
+                                  bgcolor: "rgba(107, 70, 12, .2)",
+                                },
+                              }}
+                            >
+                              View More
+                            </Button>
 
-                              ":hover": {
-                                bgcolor: "rgba(107, 70, 12, .2)",
-                              },
-                            }}
-                          >
-                            {locationState.locations.find(
-                              (location) => location.code === park.parkCode
-                            )?.isComplete ? (
-                              <Tooltip title="Remove From Map">
-                                <WrongLocationRoundedIcon
-                                  fontSize="3rem"
-                                  sx={{
-                                    color: "#6b460c",
-                                  }}
-                                />
-                              </Tooltip>
-                            ) : (
-                              <Tooltip title="Add To Map">
-                                <AddLocationAltRoundedIcon
-                                  fontSize="3rem"
-                                  sx={{
-                                    color: "#6b460c",
-                                  }}
-                                />
-                              </Tooltip>
-                            )}
-                          </IconButton>
-                        </Box>
+                            <IconButton
+                              size="large"
+                              className="addLoc"
+                              onClick={() =>
+                                addLocation(
+                                  park.parkCode,
+                                  park.fullName,
+                                  park.longitude,
+                                  park.latitude,
+                                  park.addresses[0].line1,
+                                  park.addresses[0].line2,
+                                  park.addresses[0].city,
+                                  park.addresses[0].stateCode,
+                                  park.addresses[0].postalCode
+                                )
+                              }
+                              sx={{
+                                marginLeft: "20px",
+                                border: "1.5px solid #6b460c ",
+                                bgcolor: "white",
 
-                        <Divider />
-                      </ListItem>
-                    </Box>
-                  );
-                })}
-              </List>
+                                ":hover": {
+                                  bgcolor: "rgba(107, 70, 12, .2)",
+                                },
+                              }}
+                            >
+                              {locationState.locations.find(
+                                (location) => location.code === park.parkCode
+                              )?.isComplete ? (
+                                <Tooltip title="Remove From Map">
+                                  <WrongLocationRoundedIcon
+                                    fontSize="3rem"
+                                    sx={{
+                                      color: "#6b460c",
+                                    }}
+                                  />
+                                </Tooltip>
+                              ) : (
+                                <Tooltip title="Add To Map">
+                                  <AddLocationAltRoundedIcon
+                                    fontSize="3rem"
+                                    sx={{
+                                      color: "#6b460c",
+                                    }}
+                                  />
+                                </Tooltip>
+                              )}
+                            </IconButton>
+                          </Box>
+
+                          <Divider />
+                        </ListItem>
+                      </Box>
+                    );
+                  })}
+                </List>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

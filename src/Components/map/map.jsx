@@ -45,6 +45,7 @@ export function Map() {
 
   console.log("in map", locationState.locations);
   const markers = locationState.locations.map((location, index) => {
+    console.log(locationState.locations);
     const { line1, line2, city, stateCode, postalCode } =
       location.address || {};
 
@@ -159,7 +160,7 @@ export function Map() {
                 {activeMarker === id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <Box sx={{ minWidth: 200, maxWidth: 220 }}>
-                      <Card>
+                      <Card sx={{ borderRadius: "0px" }}>
                         <CardContent sx={{ padding: "3px" }}>
                           <Typography sx={{ fontSize: 14 }}>{name}</Typography>
                           {address && (
@@ -179,7 +180,7 @@ export function Map() {
                               color: "#6b460c ",
 
                               ":hover": {
-                                bgcolor: "rgba(107, 70, 12, .05)",
+                                bgcolor: "rgba(107, 70, 12, .2)",
                               },
                             }}
                             onClick={() => goToParkPage(id)}
@@ -192,7 +193,7 @@ export function Map() {
                               color: "#6b460c ",
 
                               ":hover": {
-                                bgcolor: "rgba(107, 70, 12, .05)",
+                                bgcolor: "rgba(107, 70, 12, .2)",
                               },
                             }}
                             onClick={() => removePark(id)}

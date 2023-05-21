@@ -25,6 +25,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import AmenitiesIcons from "../parkAmenities/amenities";
 import ActivitiesIcons from "../activities/activities";
 import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
+import Tooltip from "@mui/material/Tooltip";
 
 export function ParkInfo() {
   const [park, setPark] = useState("");
@@ -57,7 +58,17 @@ export function ParkInfo() {
     return <div>Loading...</div>;
   }
 
-  function addLocation(parkCode, parkName, longitude, latitude) {
+  function addLocation(
+    parkCode,
+    parkName,
+    longitude,
+    latitude,
+    line1,
+    line2,
+    city,
+    stateCode,
+    postalCode
+  ) {
     const existingLocation = locationState.locations.find(
       (location) => location.code === parkCode
     );
@@ -68,16 +79,25 @@ export function ParkInfo() {
         name: parkName,
         long: longitude,
         lat: latitude,
+        address: {
+          line1,
+          line2,
+          city,
+          stateCode,
+          postalCode,
+        },
         isComplete: false,
       };
-      console.log(newLocation, "new loc");
 
       locationDispatch({ type: LocationActions.ADD, location: newLocation });
       locationDispatch({ type: LocationActions.TOGGLE, location: newLocation });
     } else {
+      const updatedLocation = { ...existingLocation };
+      updatedLocation.isComplete = !updatedLocation.isComplete; // toggle the isComplete property
+
       locationDispatch({
         type: LocationActions.TOGGLE,
-        location: existingLocation,
+        location: updatedLocation,
       });
     }
   }
@@ -164,26 +184,34 @@ export function ParkInfo() {
                   park.fullName,
                   park.longitude,
                   park.latitude,
-                  !park.isComplete // toggle the isComplete property
+                  park.addresses[0].line1,
+                  park.addresses[0].line2,
+                  park.addresses[0].city,
+                  park.addresses[0].stateCode,
+                  park.addresses[0].postalCode
                 )
               }
             >
               {locationState.locations.find(
                 (location) => location.code === park.parkCode
               )?.isComplete ? (
-                <WrongLocationRoundedIcon
-                  fontSize="3rem"
-                  sx={{
-                    color: "#6b460c",
-                  }}
-                />
+                <Tooltip title="Remove From Map">
+                  <WrongLocationRoundedIcon
+                    fontSize="3rem"
+                    sx={{
+                      color: "#6b460c",
+                    }}
+                  />
+                </Tooltip>
               ) : (
-                <AddLocationAltRoundedIcon
-                  fontSize="3rem"
-                  sx={{
-                    color: "#6b460c",
-                  }}
-                />
+                <Tooltip title="Add To Map">
+                  <AddLocationAltRoundedIcon
+                    fontSize="3rem"
+                    sx={{
+                      color: "#6b460c",
+                    }}
+                  />
+                </Tooltip>
               )}
             </IconButton>
           </Box>
@@ -247,7 +275,10 @@ export function ParkInfo() {
                         <LocalPhoneRoundedIcon />
                       </ListItemIcon>
                       <ListItemText
-                        primary={park.contacts.phoneNumbers[0].phoneNumber}
+                        primary={
+                          park.contacts.phoneNumbers[0]?.phoneNumber ||
+                          "No Phone Number Available"
+                        }
                       />
                     </ListItem>
                     {park.contacts.emailAddresses.map((emailAddress, index) => (
