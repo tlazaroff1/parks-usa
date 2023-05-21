@@ -11,12 +11,12 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AddLocationAltRoundedIcon from "@mui/icons-material/AddLocationAltRounded";
 import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
 import "./../../App.css";
 import "./parks.css";
-import { styled } from "@mui/material/styles";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LocationActions } from "../state/locations/location-reducer";
@@ -27,7 +27,6 @@ import grandCanyon from "./../../grandcanyon.jpg";
 import saguaro from "./../../saguaro.jpg";
 import { ImageCarousel } from "../carousel/carousel";
 import { useEffect } from "react";
-import Tooltip from "@mui/material/Tooltip";
 
 export const Parks = (props) => {
   const images = [bryceCanyon, saguaro, glacier, grandCanyon];
@@ -85,6 +84,7 @@ export const Parks = (props) => {
     { code: "WY", label: "Wyoming" },
   ];
   const [parks, setParks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { locationState, locationDispatch } = useContext(LocationContext);
   const handleChange = (event, value) => {
     locationDispatch({ type: LocationActions.SET, state: value });
@@ -92,6 +92,7 @@ export const Parks = (props) => {
 
   useEffect(() => {
     if (locationState.searchState) {
+      setLoading(true);
       callParkAPI();
     }
   }, [locationState]);
@@ -106,9 +107,16 @@ export const Parks = (props) => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setParks(data.data))
-      .catch((error) => console.error(error));
+      .then((data) => {
+        setParks(data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
+
   console.log(locationState.searchState);
   const navigate = useNavigate();
 
@@ -249,108 +257,125 @@ export const Parks = (props) => {
           )}
         ></Autocomplete>
       </Box>
+
       {locationState.searchState && (
-        <Box className="background" sx={{ minHeight: "0" }}>
-          <Box className="searchResult" width="90%" sx={{ minHeight: "0" }}>
-            <Box>
-              <Box className="parksList" width="75%" sx={{ minHeight: "0" }}>
-                <List>
-                  {parks.map((park) => {
-                    return (
-                      <Box className="listItem" sx={{ height: "200px" }}>
-                        <ListItem key={park.id} sx={{ padding: "0 0 0 0" }}>
-                          <Box
-                            width="30%"
-                            overflow="hidden"
-                            minWidth="20%"
-                            maxWidth="20%"
-                            marginRight="8px"
-                          >
-                            <img
-                              height="200px"
-                              alt={park.fullName}
-                              src={park.images[0]?.url}
-                              width="100%"
-                              className="img"
-                            />
-                          </Box>
-                          <Box sx={{ padding: "5px 5px 5px 5px" }}>
-                            <ListItemText
-                              className="parkDesc"
-                              primaryTypographyProps={{ style: textTitleStyle }}
-                              primary={park.fullName}
-                              secondary={park.description}
-                            />
-                            <Button
-                              variant="contained"
-                              onClick={() => goToParkPage(park.parkCode)}
-                              sx={{
-                                border: "1.5px solid #6b460c ",
-                                background: "white",
-                                color: "#6b460c ",
-
-                                ":hover": {
-                                  bgcolor: "rgba(107, 70, 12, .2)",
-                                },
-                              }}
-                            >
-                              View More
-                            </Button>
-
-                            <IconButton
-                              size="large"
-                              className="addLoc"
-                              onClick={() =>
-                                addLocation(
-                                  park.parkCode,
-                                  park.fullName,
-                                  park.longitude,
-                                  park.latitude,
-                                  park.addresses[0].line1,
-                                  park.addresses[0].line2,
-                                  park.addresses[0].city,
-                                  park.addresses[0].stateCode,
-                                  park.addresses[0].postalCode
-                                )
-                              }
-                              sx={{
-                                marginLeft: "20px",
-                                border: "1.5px solid #6b460c ",
-                                bgcolor: "white",
-
-                                ":hover": {
-                                  bgcolor: "rgba(107, 70, 12, .2)",
-                                },
-                              }}
-                            >
-                              {locationState.locations.find(
-                                (location) => location.code === park.parkCode
-                              )?.isComplete ? (
-                                <WrongLocationRoundedIcon
-                                  fontSize="3rem"
-                                  sx={{
-                                    color: "#6b460c",
-                                  }}
-                                />
-                              ) : (
-                                <AddLocationAltRoundedIcon
-                                  fontSize="3rem"
-                                  sx={{
-                                    color: "#6b460c",
-                                  }}
-                                />
-                              )}
-                            </IconButton>
-                          </Box>
-
-                          <Divider />
-                        </ListItem>
-                      </Box>
-                    );
-                  })}
-                </List>
+        <Box className="background" sx={{ minHeight: "12px" }}>
+          <Box className="searchResult" width="90%" sx={{ minHeight: "12px" }}>
+            {loading ? (
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <CircularProgress
+                  paddingTop="12px"
+                  paddingBottom="12px"
+                  color="success"
+                />
               </Box>
-            </Box>
+            ) : (
+              <Box>
+                <Box
+                  className="parksList"
+                  width="75%"
+                  sx={{ minHeight: "12px" }}
+                >
+                  <List>
+                    {parks.map((park) => {
+                      return (
+                        <Box className="listItem" sx={{ height: "200px" }}>
+                          <ListItem key={park.id} sx={{ padding: "0 0 0 0" }}>
+                            <Box
+                              width="30%"
+                              overflow="hidden"
+                              minWidth="20%"
+                              maxWidth="20%"
+                              marginRight="8px"
+                            >
+                              <img
+                                height="200px"
+                                alt={park.fullName}
+                                src={park.images[0]?.url}
+                                width="100%"
+                                className="img"
+                              />
+                            </Box>
+                            <Box sx={{ padding: "5px 5px 5px 5px" }}>
+                              <ListItemText
+                                className="parkDesc"
+                                primaryTypographyProps={{
+                                  style: textTitleStyle,
+                                }}
+                                primary={park.fullName}
+                                secondary={park.description}
+                              />
+                              <Button
+                                variant="contained"
+                                onClick={() => goToParkPage(park.parkCode)}
+                                sx={{
+                                  border: "1.5px solid #6b460c ",
+                                  background: "white",
+                                  color: "#6b460c ",
+
+                                  ":hover": {
+                                    bgcolor: "rgba(107, 70, 12, .2)",
+                                  },
+                                }}
+                              >
+                                View More
+                              </Button>
+
+                              <IconButton
+                                size="large"
+                                className="addLoc"
+                                onClick={() =>
+                                  addLocation(
+                                    park.parkCode,
+                                    park.fullName,
+                                    park.longitude,
+                                    park.latitude,
+                                    park.addresses[0].line1,
+                                    park.addresses[0].line2,
+                                    park.addresses[0].city,
+                                    park.addresses[0].stateCode,
+                                    park.addresses[0].postalCode
+                                  )
+                                }
+                                sx={{
+                                  marginLeft: "20px",
+                                  border: "1.5px solid #6b460c ",
+                                  bgcolor: "white",
+
+                                  ":hover": {
+                                    bgcolor: "rgba(107, 70, 12, .2)",
+                                  },
+                                }}
+                              >
+                                {locationState.locations.find(
+                                  (location) => location.code === park.parkCode
+                                )?.isComplete ? (
+                                  <WrongLocationRoundedIcon
+                                    fontSize="3rem"
+                                    sx={{
+                                      color: "#6b460c",
+                                    }}
+                                  />
+                                ) : (
+                                  <AddLocationAltRoundedIcon
+                                    fontSize="3rem"
+                                    sx={{
+                                      color: "#6b460c",
+                                    }}
+                                  />
+                                )}
+                              </IconButton>
+                            </Box>
+
+                            <Divider />
+                          </ListItem>
+                        </Box>
+                      );
+                    })}
+                  </List>
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       )}

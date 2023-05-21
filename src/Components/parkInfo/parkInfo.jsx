@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./../../App.css";
 import "./parkInfo.css";
@@ -54,7 +55,20 @@ export function ParkInfo() {
   }, [id]);
 
   if (!park) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginTop="20px"
+      >
+        <CircularProgress
+          paddingTop="32px"
+          paddingBottom="12px"
+          color="success"
+        />
+      </Box>
+    );
   }
 
   function addLocation(
