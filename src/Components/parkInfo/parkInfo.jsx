@@ -29,7 +29,6 @@ import Tooltip from "@mui/material/Tooltip";
 
 export function ParkInfo() {
   const [park, setPark] = useState("");
-  const [activities, setActivities] = useState([]);
   const [expanded, setExpanded] = React.useState("panel1");
   const { locationState, locationDispatch } = useContext(LocationContext);
 
@@ -146,7 +145,7 @@ export function ParkInfo() {
 
   const activitiesList =
     park?.activities?.map((activity) => activity.name) || [];
-  console.log(activitiesList, "hi");
+
   return (
     <Box className="background">
       <Box className="searchResult" width="90%" margin="auto auto auto auto">

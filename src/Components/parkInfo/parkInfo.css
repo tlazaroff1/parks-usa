@@ -46,3 +46,13 @@
   font-weight: bold !important;
   text-decoration: underline;
 }
+
+#panel1d-header {
+  border-top-left-radius: 10pt !important;
+  border-top-right-radius: 10pt !important;
+}
+
+#panel4d-header {
+  border-bottom-left-radius: 10pt !important;
+  border-bottom-right-radius: 10pt !important;
+}

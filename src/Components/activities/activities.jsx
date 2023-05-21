@@ -201,6 +201,9 @@ export default function ActivitiesIcons({ activities }) {
             background: "rgba(28, 60, 35, .2)",
             borderRadius: "10pt",
             margin: "auto auto auto auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Typography className="InfoTitle">Activities</Typography>
@@ -209,6 +212,7 @@ export default function ActivitiesIcons({ activities }) {
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
+              justifyContent: "center",
               alignItems: "center",
               margin: "auto auto auto auto",
             }}

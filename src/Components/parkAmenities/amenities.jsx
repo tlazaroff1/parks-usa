@@ -241,6 +241,7 @@ export default function AmenitiesIcons({ parkCode }) {
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
+              justifyContent: "center",
               alignItems: "center",
               margin: "auto auto auto auto",
             }}
