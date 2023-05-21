@@ -26,7 +26,6 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import AmenitiesIcons from "../parkAmenities/amenities";
 import ActivitiesIcons from "../activities/activities";
 import WrongLocationRoundedIcon from "@mui/icons-material/WrongLocationRounded";
-import Tooltip from "@mui/material/Tooltip";
 
 export function ParkInfo() {
   const [park, setPark] = useState("");

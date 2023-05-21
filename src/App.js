@@ -8,13 +8,7 @@ import { Header } from "./Components/header/header";
 import { LocationContext } from "./Components/state/locations/location-context";
 import { useReducer } from "react";
 import { locationReducer } from "./Components/state/locations/location-reducer";
-/*export default function App() {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyByo_ZcTT1MrLsO6EeWflKqlV-PMvgp8Vo", // Add your API key
-  });
 
-  return isLoaded ? <Map /> : null;
-}*/
 function App() {
   const [locationState, locationDispatch] = useReducer(locationReducer, {
     locations: [],
