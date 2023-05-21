@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/parks-usa/static/css/main.6baa68ac.css",
-    "main.js": "/parks-usa/static/js/main.048d17fc.js",
+    "main.js": "/parks-usa/static/js/main.59261403.js",
     "static/js/787.f85e4cef.chunk.js": "/parks-usa/static/js/787.f85e4cef.chunk.js",
     "static/media/glacier.jpg": "/parks-usa/static/media/glacier.4e82ed93af0579e57aa6.jpg",
     "static/media/bryce-canyon1.jpg": "/parks-usa/static/media/bryce-canyon1.93e7832086f36228893c.jpg",
@@ -10,11 +10,11 @@
     "static/media/logo2.png": "/parks-usa/static/media/logo2.c59b5dc561ab0024f522.png",
     "index.html": "/parks-usa/index.html",
     "main.6baa68ac.css.map": "/parks-usa/static/css/main.6baa68ac.css.map",
-    "main.048d17fc.js.map": "/parks-usa/static/js/main.048d17fc.js.map",
+    "main.59261403.js.map": "/parks-usa/static/js/main.59261403.js.map",
     "787.f85e4cef.chunk.js.map": "/parks-usa/static/js/787.f85e4cef.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6baa68ac.css",
-    "static/js/main.048d17fc.js"
+    "static/js/main.59261403.js"
   ]
 }
