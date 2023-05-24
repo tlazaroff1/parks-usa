@@ -14,6 +14,7 @@
 .background {
   background-color: #1c3c23;
   width: 100% !important;
+  min-height: 100vh;
 }
 .searchResult {
   background-color: white;
