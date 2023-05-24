@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/parks-usa/static/css/main.6baa68ac.css",
+    "main.css": "/parks-usa/static/css/main.764dcf0d.css",
     "main.js": "/parks-usa/static/js/main.241fd041.js",
     "static/js/787.f85e4cef.chunk.js": "/parks-usa/static/js/787.f85e4cef.chunk.js",
     "static/media/glacier.jpg": "/parks-usa/static/media/glacier.4e82ed93af0579e57aa6.jpg",
@@ -9,12 +9,12 @@
     "static/media/saguaro.jpg": "/parks-usa/static/media/saguaro.30e4328d39ea778f10c4.jpg",
     "static/media/logo2.png": "/parks-usa/static/media/logo2.c59b5dc561ab0024f522.png",
     "index.html": "/parks-usa/index.html",
-    "main.6baa68ac.css.map": "/parks-usa/static/css/main.6baa68ac.css.map",
+    "main.764dcf0d.css.map": "/parks-usa/static/css/main.764dcf0d.css.map",
     "main.241fd041.js.map": "/parks-usa/static/js/main.241fd041.js.map",
     "787.f85e4cef.chunk.js.map": "/parks-usa/static/js/787.f85e4cef.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6baa68ac.css",
+    "static/css/main.764dcf0d.css",
     "static/js/main.241fd041.js"
   ]
 }
